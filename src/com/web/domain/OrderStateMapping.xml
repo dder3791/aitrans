@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.OrderStateDao">
+	 
+ 	  
+ 	  
+ 	   <select id="findOrderId" parameterType="orderState" resultType="OrderState">
+       select * from orderStateD where 1=1
+       <if test="orderState!=null and orderState!='' "> and orderState=#{orderState} </if>
+       <if test="id!=null and id!='' "> and id=#{id} </if>
+      </select>  
+        
+       <select id="queryByOrderState" resultType="OrderState">
+        select *from orderStateD
+       </select> 
+        
+        
+        
+</mapper>

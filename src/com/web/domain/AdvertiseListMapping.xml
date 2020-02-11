@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.AdvertiseListDao">
+	<!-- 记录企业客户总记录数 -->
+	<select id="countAdvertiseByPage" parameterType="com.web.util.Page" resultType="long">
+		select count(advertiseListD.id) from advertiseListD where 1=1
+		<if test="msgType!=null and msgType!=''"> and (advertiseListD.countryCH like '${msgType}%' or advertiseListD.countryEN like '${msgType}%') </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'"> 
+					and (advertiseListD.countryCH  like '中国' or advertiseListD.countryEN  like 'China')
+					<if test="phonemsg!=null and phonemsg!=''">
+						and advertiseListD.province like '%${phonemsg}%'
+					</if>
+				</when>
+				<when test="namemsg==2 or namemsg=='2'"> and advertiseListD.countryCH  not like '中国%' and advertiseListD.countryEN  not like 'China'</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''"> and ( nameCH like
+			'%${msg}%' or nameEN like '%${msg}%' or
+			advertiseListD.province like '%${msg}%' or advertiseListD.introCH like
+			'%${msg}%' or advertiseListD.introEN like
+			'%${msg}%')
+		</if>
+	</select>
+	
+	
+	<!-- 分页展示企业客户信息 -->
+	<sql id="findCompanyCustomerByPageValue">
+		advertiseListD.nameCH,
+		advertiseListD.nameEN,
+		advertiseListD.countryCH,
+		advertiseListD.countryEN,
+		advertiseListD.introEN,
+		advertiseListD.introCH,
+		advertiseListD.web,
+		advertiseListD.id
+	</sql>
+	<select id="findAdvertiseByPage" parameterType="com.web.util.Page" resultType="AdvertiseList">
+		EXEC ( 'SELECT
+		TOP '+#{pageSize}+'
+		<include refid="findCompanyCustomerByPageValue" />
+		from 
+		advertiseListD
+		WHERE 1=1  and 
+		advertiseListD.ID NOT IN (
+		SELECT
+		TOP
+		'+#{startIndex}+' advertiseListD.id
+		FROM
+		advertiseListD
+		WHERE 1=1'
+		<if test="msgType!=null and msgType!=''">+' AND (countryCH LIKE ''${msgType}%'' or countryEN like ''${msgType}%'') '</if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'">+' and (advertiseListD.countryCH  like ''中国'' or advertiseListD.countryEN  like ''China'' )'
+					<if test="phonemsg!=null and phonemsg!=''">
+						+' and province like ''${phonemsg}'' '
+					</if>
+				</when>
+				<when test="namemsg==2 or namemsg=='2'">+' and advertiseListD.countryCH  not like ''中国'' and advertiseListD.countryEN  not like ''China'' '</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''">+' AND (nameZH
+			like ''%${msg}%'' or nameEN like ''%${msg}%''  
+			or advertiseListD.introEN like ''%${msg}%''
+			or advertiseListD.introCH like ''%${msg}%''
+			)'
+		</if>
+		+' GROUP BY
+		advertiseListD.id
+		ORDER BY
+		advertiseListD.id
+		DESC
+		)
+		AND 1=1'
+		<if test="msgType!=null and msgType!=''">+' AND (countryCH LIKE ''${msgType}%'' or countryEN like ''${msgType}%'') '</if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'">+' and (advertiseListD.countryCH  like ''中国'' or advertiseListD.countryEN  like ''China'') '
+					<if test="phonemsg!=null and phonemsg!=''">
+						+' and province like ''${phonemsg}'' '
+					</if>
+				</when>
+				<when test="namemsg==2 or namemsg=='2'">+' and advertiseListD.countryCH  not like ''中国'' and advertiseListD.countryEN  not like ''China'' '</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''">+' AND (
+			nameZH like ''%${msg}%'' or nameEN like ''%${msg}%'' 
+			or advertiseListD.introEN like ''%${msg}%''
+			or advertiseListD.introCH like ''%${msg}%'' '
+		</if>
+		+' GROUP BY
+		<include refid="findCompanyCustomerByPageValue" />
+		ORDER BY advertiseListD.id DESC ')
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ClientUserDao">
+	<!-- 查询所有用户信息 -->
+	<select id="queryByAll"  resultType="ClientUserD" >
+		select * from cilentUserD
+	</select>
+    
+    <!-- 添加用户信息 -->
+    <insert id="saveUser" parameterType="ClientUserD">
+    insert into clientUserD (userName,initialPassword,emaile,loginStatu,password,tel,createDate,roleName,balance,certificationState,certificationType,serviceLanguage,userType) values(#{userName},#{initialPassword},#{emaile},#{loginStatu},#{password},#{tel},getDate(),#{roleName},#{balance},#{certificationState},#{certificationType},#{serviceLanguage},#{userType});
+    </insert>
+    
+    <!-- 登录查询用户信息 -->
+    <select id="findUser" parameterType="ClientUserD" resultType="int">
+      select COUNT(*) from clientUserD where userName=#{userName} and password=#{password}
+    </select>
+    
+    <!-- 根据用户以及密码查询id -->
+    <select id="findUserByid" parameterType="ClientUserD" resultType="ClientUserD">
+      select * from clientUserD where (emaile=#{userName} or tel=#{userName} or userName=#{userName} ) and password=#{password}
+    </select>
+    
+    <!-- 查询当前账号是否重复 -->
+	<select id="checkUserName" parameterType="ClientUserD" resultType="int">
+	  select COUNT(*) from clientUserD where userName=#{userName}
+	</select>
+	<!-- 查询当前手机号是否重复 -->
+	<select id="checkUserPhone" parameterType="ClientUserD" resultType="int">
+	 select COUNT(*) from clientUserD where tel=#{tel}
+	</select>
+	<!-- 根据用户id查询用户信息 -->
+	<select id="findCustomerById" parameterType="int" resultType="ClientUserD">
+	  select * from clientUserD where id=#{id}
+	</select>
+	
+	
+	 
+	<!-- 查询用户邮箱是否重复 -->
+	<select id="checkEmail" parameterType="ClientUserD" resultType="int">
+	  select count(*) from clientUserD where emaile=#{emaile}
+	</select>
+	
+	
+	<!-- 根据id查询用户真实姓名 -->
+	<select id="findName" parameterType="int" resultType="String">
+	  select realName from clientUserD where id=#{id}
+	 </select>
+	 
+	<!-- 根据邮箱或者用户名查询用户信息 -->
+	<select id="queryByName" parameterType="string" resultType="ClientUserD">
+		 select top 1 * from clientUserD where userName=#{name } or emaile = #{name } or tel = #{name }
+	</select>
+	
+		<!-- 验证该用户名下的身份证信息是否存在 -->
+	<select id="queryByCardId" parameterType="ClientUserD" resultType="ClientUserD">
+		 select * from clientUserD where (userName=#{userName }  or emaile = #{userName } or tel = #{userName }  )  and realName = #{realName } and cardId = #{cardId }
+	</select>
+		<!-- 根据用户名获取手机号 -->
+	<select id="getIphone" parameterType="string" resultType="string">
+		select top 1 tel from clientUserD where userName=#{name } or emaile = #{name } or tel = #{name }
+	</select>
+	    <!-- 根据id修改信誉值 -->
+	<update id="editReputation" parameterType="ClientUserD" >
+		update clientUserD set reputation=#{reputation },balance=#{balance} where id = #{id }
+	</update>
+	<!-- 	设置密保问题 -->
+	<update id="setSecurityQuestion" parameterType="ClientUserD" >
+		update clientUserD set securityQuestion=#{securityQuestion } ,answer=#{answer } where id = #{id }
+	</update>
+	<!-- 根据用户名获取密保问题及答案 -->
+	<select id="getSecurityQuestion" parameterType="string" resultType="string">
+		select securityQuestion from clientUserD where userName = #{name } or emaile = #{name } or tel = #{name }
+	</select>
+	<select id="checkAnswer" parameterType="ClientUserD" resultType="ClientUserD">
+		select * from clientUserD where (userName=#{userName }  or emaile = #{userName } or tel = #{userName }  ) and securityQuestion=#{securityQuestion } and answer=#{answer }
+	</select>
+	
+	
+	<!-- 修改客户余额信息 -->
+	<update id="updateUserWallet" parameterType="ClientUserD">
+		update clientUserD set balance=#{balance} where id=#{id}
+	</update>
+	
+	<select id="getUserShow" resultType="ClientUserShowVo">
+		select id,url,web,type,userId,isUserful from clientUserShowD where isUserful=1 order by id asc
+	</select>
+	
+	<select id="getNotFixedRankData" resultType="ClientUserShowVo">
+		select id,url,web,type,userId,isUserful from clientUserShowD where isUserful=1 and type=0 order by id asc
+	</select>
+	
+	
+	<select id="getFixClientIdStr" resultType="String">
+		select userId from clientUserShowD where type = 1 and userId is not null and isUserful=1
+	</select>
+	
+	
+	<select id="getNewShowRankUpdate" parameterType="java.util.HashMap" resultType="ClientUserShowVo">
+		SELECT top ${notFixedNo} 
+			t2.id userId,
+			t2.headPortrait url,
+			t3.Ltd web
+		FROM
+			(
+				SELECT
+					t1.id,
+					u.headPortrait,
+					SUM (allMoney) allMoney
+				FROM
+					(
+						SELECT
+							id,
+							0 allMoney
+						FROM
+							clientUserD
+						<if test="notIn != null and notIn != ''">
+							where id not in (${notIn})
+						</if>
+						UNION ALL
+							SELECT
+								clientUserId id,
+								SUM (totalMoney) allMoney
+							FROM
+								clientCustomerNeedD
+							<if test="notIn != null and notIn != ''">
+								where id not in (${notIn})
+							</if>
+							GROUP BY
+								clientUserId
+					) t1,clientUserD u
+				where 
+					t1.id = u.id
+				GROUP BY
+					t1.id,headPortrait
+			) t2
+		LEFT JOIN onLineCustomerD t3 ON t2.id = t3.clientUserId
+		ORDER BY
+			allMoney DESC
+	</select>
+	
+	<update id="updateSingleRank" parameterType="ClientUserShowVo">
+		update clientUserShowD set web = #{web} , url = #{url} , userId = #{userId} where id = #{id}
+	</update>
+	
+	<select id="getAd1Type" resultType="ClientAdVo">
+		select id,url,web,context,type,isUseFul,coord from picAdvertiseD where isUseFul = 1 and type = 1
+	</select>
+	
+	<select id="getAd2Type" resultType="ClientAdVo">
+		select id,url,web,context,type,isUseFul,coord from picAdvertiseD where isUseFul = 1 and type = 2
+	</select>
+	
+	<select id="getAd3Type" resultType="ClientAdVo">
+		select id,url,web,context,type,isUseFul,coord from picAdvertiseD where isUseFul = 1 and type = 3
+	</select>
+	
+	<select id="getAd4Type" resultType="ClientAdVo">
+		select id,url,web,context,type,isUseFul,coord from picAdvertiseD where isUseFul = 1 and type = 4
+	</select>
+	
+	<select id="getOldAdListNotFixed" resultType="AdvertiseList">
+		select id,web,nameCH,nameEN,countryCH,countryEN,province,introCH,introEN,userId from advertiseListD where type=0 and isuseful=1
+	</select>
+	
+	<select id="getNewAdListNotFixed" resultType="AdvertiseList">
+		SELECT
+			ut2.id userId,
+			b.country countryCH,
+			b.countryEN,
+			b.nameZH nameCH,
+			b.nameEN,
+			b.Ltd web,
+			b.intro introCH,
+			b.introEN,
+			b.registrationAddress province
+		FROM
+			(
+				SELECT
+					id,
+					SUM (allPay) allPay
+				FROM
+					(
+						SELECT
+							a.id,
+							0 allPay
+						FROM
+							clientUserD a,
+							onLineCustomerD b
+						WHERE
+							a.id = b.clientUserId
+						UNION ALL
+							SELECT
+								a.id,
+								SUM (b.payNumber) allPay
+							FROM
+								clientUserD a,
+								orderD b
+							WHERE
+								a.id = b.clientUserId
+							AND b.taskStateId >= 6
+							GROUP BY
+								a.id
+					) ut1
+				GROUP BY
+					id
+			) ut2,
+			onLineCustomerD b
+		WHERE
+			ut2.id = b.clientUserId
+		  and ut2.id not in (select userId from advertiseListD where type = 1)
+		order by ut2.allPay DESC
+	</select>
+	
+	<update id="updatesSingleADV" parameterType="AdvertiseList">
+		update advertiseListD set userId = #{userId} 
+			<if test="web != null and web != ''">, web = #{web}</if>
+			<if test="nameCH != null and nameCH != ''">, nameCH = #{nameCH}</if>
+			<if test="nameEN != null and nameEN != ''">, nameEN = #{nameEN}</if>
+			<if test="countryCH != null and countryCH != ''">, countryCH = #{countryCH}</if>
+			<if test="countryEN != null and countryEN != ''">, countryEN = #{countryEN}</if>
+			<if test="introCH != null and introCH != ''">, introCH = #{introCH}</if>
+			<if test="introEN != null and introEN != ''">, introEN = #{introEN}</if>
+			<if test="province != null and province != ''">, province = #{province}</if>
+			where id = #{id}
+	</update>
+	
+	<insert id="insertSingleADV" parameterType="AdvertiseList">
+		insert into advertiseListD (web,nameCH,nameEN,countryCH,countryEN,introCH,introEN,province,userId) values (#{web},#{nameCH},#{nameEN},#{countryCH},#{countryEN},#{introCH},#{introEN},#{province},#{userId})
+	</insert>
+	 
+</mapper>

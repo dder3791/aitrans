@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.IntegralDao">
+
+	<!-- 查询符合条件的所有商品 记录数-->
+	 <select id="countAll" parameterType="com.web.util.Page" resultType="long">
+	 	select count(*) from integralD where 1=1
+	 </select>
+	 
+	 <select id="findAllByPage" parameterType="com.web.util.Page" resultType="Integral">
+	 	EXEC ('select TOP ' + #{ pageSize }+ ' * from integralD where 1=1 and id not in(SELECT TOP '
+		+#{startIndex}+ ' ID FROM integralD where 1=1)')		
+	 </select>
+	
+	 <select id="queryByAll" resultType="Integral">
+	  select *from integralD
+	 </select>
+	 
+	 <select id="queryByCount" resultType="int">
+	  select count(*) from integralD
+	 </select>
+	 
+	   <select id="queryByAllIntegral"   parameterType="com.web.util.Page"    resultType="Integral">
+     <if test="dateType==0">
+     EXEC (
+	'select TOP  ' +#{ pageSize }+ '  * from  integralD  WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM integralD )  '
+)
+</if>
+ 
+     </select>
+</mapper>

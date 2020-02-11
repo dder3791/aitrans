@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.QuotationDao">
+     <sql id="key">
+		<trim suffixOverrides=",">
+			<if test="tranPrice!=null and tranPrice!=''">tranPrice,</if>
+
+			<if test="prooPrice!=null and prooPrice!=''">prooPrice,</if>
+
+			<if test="dayTrans!=null and dayTrans!=''">dayTrans,</if>
+			
+			<if test="dayProo!=null and dayProo!=''">dayProo,</if>
+			
+			<if test="dayAudit!=null and dayAudit!=''">dayAudit,</if>
+
+			<if test="majorTotal!=null and majorTotal!=''">majorTotal,</if>
+
+			<if test="prooTotal!=null and prooTotal!=''">prooTotal,</if>
+
+			<if test="languages!=null and languages!=''">languages,</if>
+
+            <if test="auditPrice!=null and auditPrice!=''">auditPrice,</if>
+            
+            <if test="auditTotal!=null and auditTotal!=''">auditTotal,</if>
+            
+			<if test="transtionId!=null and transtionId!=''">transtionId,</if>
+
+			<if test="worksOrigin!=null and worksOrigin!=''">worksOrigin,</if>
+
+			<if test="worksTarget!=null and worksTarget!=''">worksTarget,</if>
+
+			<if test="domain!=null and domain!=''">domain,</if>
+            
+            <if test="applyStateT!=null and applyStateT!=''">#{applyStateT},</if>
+            
+            <if test="applyStateP!=null and applyStateP!=''">#{applyStateP},</if>
+            
+            <if test="applyStateA!=null and applyStateA!=''">#{applyStateA},</if>
+            
+            <if test="tranReason!=null and tranReason!=''">#{tranReason},</if>
+            
+            <if test="prooReason!=null and prooReason!=''">#{prooReason},</if>
+            
+            <if test="auditReason!=null and auditReason!=''">#{auditReason},</if>
+		</trim>
+	</sql>
+      
+    <sql id="value">
+		<trim suffixOverrides=",">
+			<if test="tranPrice!=null and tranPrice!=''">#{tranPrice},</if>
+
+			<if test="prooPrice!=null and prooPrice!=''">#{prooPrice},</if>
+
+			<if test="dayTrans!=null and dayTrans!=''">#{dayTrans},</if>
+			
+			<if test="dayProo!=null and dayProo!=''">#{dayProo},</if>
+			
+			<if test="dayAudit!=null and dayAudit!=''">#{dayAudit},</if>
+
+			<if test="majorTotal!=null and majorTotal!=''">#{majorTotal},</if>
+
+			<if test="prooTotal!=null and prooTotal!=''">#{prooTotal},</if>
+
+			<if test="languages!=null and languages!=''">#{languages},</if>
+			
+			 <if test="auditPrice!=null and auditPrice!=''">#{auditPrice},</if>
+            
+            <if test="auditTotal!=null and auditTotal!=''">#{auditTotal},</if>
+
+			<if test="transtionId!=null and transtionId!=''">#{transtionId},</if>
+
+			<if test="worksOrigin!=null and worksOrigin!=''">#{worksOrigin},</if>
+
+			<if test="worksTarget!=null and worksTarget!=''">#{worksTarget},</if>
+
+			<if test="domain!=null and domain!=''">#{domain},</if>
+			
+			<if test="applyStateT!=null and applyStateT!=''">#{applyStateT},</if>
+			
+			<if test="applyStateP!=null and applyStateP!=''">#{applyStateP},</if>
+			
+			<if test="applyStateA!=null and applyStateA!=''">#{applyStateA},</if>
+			
+			<if test="tranReason!=null and tranReason!=''">#{tranReason},</if>
+			
+			<if test="prooReason!=null and prooReason!=''">#{prooReason},</if>
+			
+			<if test="auditReason!=null and auditReason!=''">#{auditReason},</if>
+
+		</trim>
+	</sql>  
+      
+      
+      <sql id="updateValue">
+		<trim suffixOverrides=",">
+			<!-- <if test="transtionId!=null and transtionId !=''">,</if> -->
+			 
+			<if test="tranPrice!=null and tranPrice!=''">tranPrice=#{tranPrice},</if>
+
+			<if test="prooPrice!=null and prooPrice!=''">prooPrice=#{prooPrice},</if>
+			
+			<if test="dayTrans!=null and dayTrans!=''">dayTrans=#{dayTrans},</if>
+			
+			<if test="dayProo!=null and dayProo!=''">dayProo=#{dayProo},</if>
+			
+			<if test="dayAudit!=null and dayAudit!=''">dayAudit=#{dayAudit},</if>
+			
+			<if test="majorTotal!=null and majorTotal!=''">majorTotal=#{majorTotal},</if>
+			
+			<if test="prooTotal!=null and prooTotal!=''">prooTotal=#{prooTotal},</if>
+			
+			<if test="transtionId!=null and transtionId!=''">transtionId=#{transtionId},</if>
+			
+
+			
+			<!-- <if test="domain!=null and domain!=''">domain=#{domain},</if> -->
+
+			<if test="auditPrice!=null and auditPrice!=''">auditPrice=#{auditPrice},</if>
+
+			<if test="auditTotal!=null and auditTotal!=''">auditTotal=#{auditTotal},</if>
+
+			<if test="applyStateT!=null and applyStateT!=''">applyStateT=#{applyStateT},</if>
+
+			<if test="tranReason!=null and tranReason!=''">tranReason=#{tranReason},</if>
+			
+			<if test="prooReason!=null and prooReason!=''">prooReason=#{prooReason},</if>
+			
+			<if test="auditReason!=null and auditReason!=''">auditReason=#{auditReason},</if>
+			
+			<if test="applyStateP!=null and applyStateP!=''">applyStateP=#{applyStateP},</if>
+             
+			<if test="applyStateA!=null and applyStateA!=''">applyStateA=#{applyStateA},</if>
+			 
+		</trim>
+	</sql>
+      
+     <!-- 修改译员报价信息 -->
+    <update id="updatePrice" parameterType="Quotation">
+    update quotationD set worksTarget=#{worksTarget},worksOrigin=#{worksOrigin},
+     <include refid="updateValue"/>
+    where domain=#{domain} and languages=#{languages} and transtionId=#{id}
+    </update>
+    
+	  <!-- 修改译员报价下的申请等级信息 -->
+    <update id="updateTranLevel" parameterType="Quotation">
+    update quotationD set 
+     <include refid="updateValue"/>
+    where id=#{id}
+    </update>
+    
+	 <!-- <insert id="saveQuotation" parameterType="Quotation">
+         insert into
+		quotationD
+		(
+		<include refid="key" />
+		)
+		values
+		(
+		<include refid="value" />
+		)
+      </insert> -->
+			
+    <!-- 根据译员id查询报价信息 -->
+    <select id="queryTransQuotation" parameterType="int" resultType="Quotation">
+     select * from quotationD where transtionId=#{id}
+    </select>
+    
+    <select id="queryByQuotationid" parameterType="int" resultType="Quotation">
+     select * from quotationD where id=#{id}
+    </select>
+    
+   
+    <!--  查询翻译价格 -->
+     <select id="queryByTransPrice" parameterType="int" resultType="Quotation">
+     select * from quotationD where transtionId=#{id} and tranlevels>=3
+     and (tranPrice is NULL or  tranPrice=0)
+    </select> 
+     <!-- 查询校对价格 -->
+    <select id="queryByProoPrice" parameterType="int" resultType="Quotation">
+     select * from quotationD where transtionId=#{id} and proolevels>=3
+     and (prooPrice is NULL or  prooPrice=0)
+    </select> 
+     <!-- 查询审核价格 -->
+    <select id="queryByAuditPrice" parameterType="int" resultType="Quotation">
+     select * from quotationD where transtionId=#{id} and auditlevels>=3
+     and (auditPrice is NULL or  auditPrice=0)
+    </select> 
+     <!-- 查询当前译员翻译经验及校对经验 -->
+    <select id="queryByQuoted" parameterType="int" resultType="Quotation">
+    select  sum(majorTotal) as majorTotals,sum(prooTotal) as prooTotals from quotationD where transtionId=#{id}
+    </select>
+    <!-- 根据译员id以及语言查询报价信息 -->
+    <select id="queryBylanguagesAndDomain" parameterType="Quotation" resultType="Field">
+    select  f.id id,q.domain field  from  quotationD q, fieldD f  where q.transtionId=#{transtionId} and q.languages=#{languages} and q.domain = f.field
+    </select>
+    
+    <select id="queryByTranLevel" parameterType="Quotation" resultType="Quotation">
+     SELECT *  from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId}
+    </select> 
+     <!-- 查询译员下的等级 -->
+    <select id="queryByLevels" parameterType="Quotation" resultType="Integer">
+    select DISTINCT(a.levels) from
+    ((SELECT tranlevels levels from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId}
+    union all 
+    SELECT proolevels levels from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId})
+    union all 
+    SELECT auditlevels levels from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId}) a
+   where a.levels is not null
+   order by a.levels asc
+    </select>
+    <!-- 选定译员中根据条件查看流程类型 -->
+    <select id="queryByProcedureType" parameterType="Quotation" resultType="KeyAndValueVo">
+    select a.type valued ,a.typeid keyd from 
+    ((SELECT '仅翻译' type ,1 typeid  from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId} and tranlevels >= #{tranlevels}
+     union all 
+     SELECT '翻译校对' type,2 typeid   from quotationD where languages=#{languages} and domain=#{domain} and transtionId=#{transtionId} and proolevels >= #{tranlevels})
+     union all 
+     SELECT '翻译校对审核' type,3 typeid   from quotationD where languages=#{languages} and domain=#{domain}  and transtionId=#{transtionId} and auditlevels >= #{tranlevels}) a
+     order by a.typeid asc
+    </select>
+     
+    <select id="queryByTranPrices" parameterType="Quotation" resultType="Quotation">
+    SELECT *  from quotationD where 
+    languages=#{languages} 
+    and domain=#{domain} 
+    and transtionId=#{transtionId}
+    <if test="tranlevels!=null and tranlevels!=''">
+          and tranlevels=#{tranlevels}
+    </if>  
+    <if test="proolevels!=null and proolevels!=''">
+          and proolevels=#{proolevels}
+    </if>
+    <if test="auditlevels!=null and auditlevels!=''">
+          and auditlevels=#{auditlevels}
+    </if>    
+    </select> 
+    
+    
+    <update id="updateApplyState" parameterType="Quotation" >
+    	update quotationD set domain=#{domain}
+    	<if test="applyStateT==1">
+    		,applyStateT=1
+    	</if>
+    	<if test="applyStateP==1">
+    		,applyStateP=1
+    	</if>
+    	<if test="applyStateA==1">
+    		,applyStateA=1
+    	</if>
+    	where id=#{id}
+    </update>
+    
+     <insert id="saveQuotation" parameterType="Quotation">
+         insert into
+		quotationD
+		(transtionId,languages,domain,applyStateT,applyStateP,applyStateA)
+		values
+		(#{transtionId},#{languages},#{domain},#{applyStateT},#{applyStateP},#{applyStateA})
+      </insert>
+    
+    <delete id="deleteQuotation" parameterType="Quotation">
+    	delete from quotationD where transtionId='${transtionId}' and languages='${languages}'
+    </delete>
+    
+    <delete id="deleteQuoByDomain" parameterType="Quotation">
+    	delete from quotationD where transtionId='${transtionId}' and languages='${languages}' and domain='${domain}'
+    </delete>
+</mapper>

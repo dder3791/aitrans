@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.TradingRecordDao">
+	 
+	 <!-- 添加交易信息 -->
+	 <sql id="addTradRecordKey">
+	  <trim suffixOverrides=",">
+	 	<if test="payMoney!=null and payMoney!=''">payMoney,</if>
+	 	<if test="payState!=null and payState!=''">payState,</if>
+	 	<if test="payModel!=null and payModel!=''">payModel,</if>
+	 	<if test="payTime!=null and payTime!=''">payTime,</if>
+	 	<if test="payee!=null and payee!=''">payee,</if>
+	 	<if test="payeeModel!=null and payeeModel!=''">payeeModel,</if>
+	 	<if test="payer!=null and payer!=''">payer,</if>
+	 	<if test="accountNumber!=null and accountNumber!=''">accountNumber,</if>
+	 	<if test="intro!=null and intro!=''">intro,</if>
+	 	<if test="type!=null and type!=''">type,</if>
+	 	userType
+	  </trim>
+	 </sql>
+	 <sql id="addTradRecordValue">
+	  <trim suffixOverrides=",">
+	 	<if test="payMoney!=null and payMoney!=''">#{payMoney},</if>
+	 	<if test="payState!=null and payState!=''">#{payState},</if>
+	 	<if test="payModel!=null and payModel!=''">#{payModel},</if>
+	 	<if test="payTime!=null and payTime!=''">#{payTime},</if>
+	 	<if test="payee!=null and payee!=''">#{payee},</if>
+	 	<if test="payeeModel!=null and payeeModel!=''">#{payeeModel},</if>
+	 	<if test="payer!=null and payer!=''">#{payer},</if>
+	 	<if test="accountNumber!=null and accountNumber!=''">#{accountNumber},</if>
+	 	<if test="intro!=null and intro!=''">#{intro},</if>
+	 	<if test="type!=null and type!=''">#{type},</if>
+	 	#{userType}
+	   </trim>
+	 </sql>
+ 	 <insert id="addTradRecord" parameterType="TradingRecord">
+ 	 	insert into tradingRecordD 
+ 	 	(
+		<include refid="addTradRecordKey" />
+		)
+		values
+		(
+		<include refid="addTradRecordValue" />
+		)
+ 	 </insert>
+ 
+ 	
+ 	<select id="selectTradRecordByouttradeno" parameterType="string" resultType="TradingRecord">
+ 		select * from tradingRecordD where payState='未转账'
+ 		<if test="_parameter!=null and _parameter!=''">
+			and ${_parameter}
+		</if>
+ 	</select>
+ 	
+ 	<update id="updateTradRecordBYwhere" parameterType="TradingRecord">
+ 		update tradingRecordD set payState='已支付' where accountNumber=${accountNumber}
+ 	</update>
+ 	<select id="checkState" parameterType="string" resultType="string">
+ 		select payState from tradingRecordD where accountNumber=#{out_trade_no}
+ 	</select>
+ 
+</mapper>

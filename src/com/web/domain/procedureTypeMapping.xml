@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ProcedureTypeDao">
+	<!-- 查询所有流程信息 -->
+	<select id="queryByAll" resultType="ProcedureType">
+		select * from procedureTypeD;
+	</select>
+		<!-- 根据流程名查询id -->
+	<select id="getProcedureId" parameterType="string" resultType="int">
+		select id from procedureTypeD where procedureType = #{procedure }
+	</select>
+</mapper>

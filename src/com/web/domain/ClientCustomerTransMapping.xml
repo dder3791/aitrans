@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ClientCustomerTransDao">
+    <!-- 添加译员对于需求信息Z -->
+	<insert id="addtransCustomer" parameterType="ClientCustomerNeedTrans">
+		insert into clientCustomerNeed_transD (clientCustomerNeedId,translatorId)values(#{clientCustomerNeedId},#{translatorId})
+	</insert>
+	
+	<!-- 查询译员下的需求 -->
+	<select id="getTransNeedCount" parameterType="int" resultType="long">
+	 select count(*) from clientCustomerNeed_transD where translatorId=#{id}
+	</select>
+	
+	<!-- 删除译员所对应的需求 -->
+	<delete id="deleteTransNeed" parameterType="ClientCustomerNeedTrans">
+	  delete from clientCustomerNeed_transD where clientCustomerNeedId=#{clientCustomerNeedId} and translatorId=#{translatorId}
+	</delete>
+	 
+	
+	  <!-- 查询当前译员对应的需求 -->
+    <select id="queryByMyTasks" parameterType="int" resultType="ClientCustomerNeedTrans">
+    select * from clientCustomerNeed_transD left join clientCustomerNeedD on 
+    clientCustomerNeedD.id=clientCustomerNeed_transD.clientCustomerNeedId 
+    where translatorId=#{transId}
+    </select>
+    
+    <select id="queryByNeedId" parameterType="int" resultType="ClientCustomerNeedTrans">
+	  select * from clientCustomerNeed_transD where clientCustomerNeedId=#{id}
+	</select> 
+    
+    <!-- 根据needId 查找数据 -->
+    <select id="queryById" parameterType="ClientCustomerNeedTrans" resultType="ClientCustomerNeedTrans">
+    	select * from clientCustomerNeed_transD where 1=1
+    	<if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">and clientCustomerNeedId=#{clientCustomerNeedId}</if>
+    	<if test="translatorId!=null and translatorId!=''">and translatorId=#{translatorId}</if>
+    </select>
+    
+    <delete id="delete" parameterType="ClientCustomerNeedTrans">
+    	delete from clientCustomerNeed_transD where 1=1
+    	<if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">
+    		and clientCustomerNeedId=#{clientCustomerNeedId}
+    	</if>
+    	<if test="translatorId!=null and translatorId!=''">
+    		and translatorId=#{translatorId}
+    	</if>
+    </delete>
+    
+    
+    <!-- 根据需求id，删除中间表信息 -->
+    <delete id="deleteByNeedId" parameterType="int">
+	    delete from clientCustomerNeed_transD where 1=1
+	    <if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">
+	      and clientCustomerNeedId=#{id}
+	    </if>
+    </delete>
+    
+    <!-- 发布项目批量添加中间表数据 -->
+    <insert id="addtransCustomerBat" parameterType="string">
+		insert into clientCustomerNeed_transD(clientCustomerNeedId,translatorId) values ${_parameter}
+	</insert>
+    
+</mapper>

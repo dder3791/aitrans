@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ScheduleDao">
+	<!-- 查询所有的周期系数信息 -->
+	<select id="queryByAll"  resultType="Schedule">
+		select * from scheduleD
+	</select>
+	<!-- 根据周期名称查询周期的Id -->
+	<select id="queryBySchedule"  parameterType="string" resultType="Schedule">
+		select * from scheduleD where schedule=#{cycle}
+	</select>
+ 
+</mapper>
+

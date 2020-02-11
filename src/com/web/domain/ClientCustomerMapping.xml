@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ClientCustomerDao">
+
+	<sql id="onLinekey">
+		<trim suffixOverrides=",">
+			<if test="nameZH!=null and nameZH!=''">nameZH,</if>
+
+			<if test="nameEN!=null and nameEN!=''">nameEN,</if>
+
+			<if test="nameShort!=null and nameShort!=''">nameShort,</if>
+
+			<if test="size!=null and size!=''">size,</if>
+
+			<if test="scope!=null and scope!=''">scope,</if>
+
+			<if test="address!=null and address!=''">address,</if>
+
+			<if test="Ltd!=null and Ltd!=''">Ltd,</if>
+
+			<if test="cel!=null and cel!=''">cel,</if>
+
+			<if test="tel!=null and tel!=''">tel,</if>
+
+			<if test="intro!=null and intro!=''">intro,</if>
+
+			<if test="registrationURL!=null and registrationURL!=''">registrationURL,</if>
+
+			<if test="contact!=null and contact!=''">contact,</if>
+
+			<if test="clientUserId!=null and clientUserId!=''">clientUserId,</if>
+
+			<if test="registrationNumber!=null and registrationNumber!=''">registrationNumber,</if>
+
+			<if test="registrationAddress!=null and registrationAddress!=''">registrationAddress,</if>
+			
+			<if test="registrationAddressEN!=null and registrationAddressEN!=''">registrationAddressEN,</if>
+			
+			<if test="country!=null and country!=''">country,</if>
+			
+			<if test="countryEN!=null and countryEN!=''">countryEN,</if>
+			
+			<if test="countryEN!=null and countryEN!=''">introEN</if>
+
+		</trim>
+	</sql>
+
+	<sql id="onLineValue">
+		<trim suffixOverrides=",">
+			<if test="nameZH!=null and nameZH!=''">#{nameZH},</if>
+
+			<if test="nameEN!=null and nameEN!=''">#{nameEN},</if>
+
+			<if test="nameShort!=null and nameShort!=''">#{nameShort},</if>
+
+			<if test="size!=null and size!=''">#{size},</if>
+
+			<if test="scope!=null and scope!=''">#{scope},</if>
+
+			<if test="address!=null and address!=''">#{address},</if>
+
+			<if test="Ltd!=null and Ltd!=''">#{Ltd},</if>
+
+			<if test="cel!=null and cel!=''">#{cel},</if>
+
+			<if test="tel!=null and tel!=''">#{tel},</if>
+
+			<if test="intro!=null and intro!=''">#{intro},</if>
+
+			<if test="registrationURL!=null and registrationURL!=''">#{registrationURL},</if>
+
+			<if test="contact!=null and contact!=''">#{contact},</if>
+
+			<if test="clientUserId!=null and clientUserId!=''">#{clientUserId},</if>
+
+			<if test="registrationNumber!=null and registrationNumber!=''">#{registrationNumber},</if>
+
+			<if test="registrationAddress!=null and registrationAddress!=''">#{registrationAddress},</if>
+			
+			<if test="registrationAddressEN!=null and registrationAddressEN!=''">#{registrationAddressEN},</if>
+			
+			<if test="country!=null and country!=''">#{country},</if>
+			
+			<if test="countryEN!=null and countryEN!=''">#{countryEN},</if>
+			
+			<if test="countryEN!=null and countryEN!=''">#{introEN}</if>
+
+		</trim>
+	</sql>
+
+	<sql id="updateclientUserkeyValue">
+		<trim suffixOverrides=",">
+			<if test="headPortrait!=null and headPortrait!=''">headPortrait=#{headPortrait},</if>
+
+			<if test="realName!=null and realName!=''">realName=#{realName},</if>
+
+			<if test="cardId!=null and cardId!=''">cardId=#{cardId},</if>
+
+			<if test="sex!=null and sex!=''">sex=#{sex},</if>
+
+			<if test="roleName!=null and roleName!=''">roleName=#{roleName},</if>
+
+			<if test="birthday!=null and birthday!=''">birthday=#{birthday},</if>
+
+			<if test="address!=null and address!=''">address=#{address},</if>
+
+			<if test="tel!=null and tel!=''">tel=#{tel},</if>
+
+			<if test="emaile!=null and emaile!=''">emaile=#{emaile},</if>
+
+			<if test="intro!=null and intro!=''">intro=#{intro},</if>
+
+			<if test="password!=null and password!=''">password=#{password},</if>
+
+			<if test="job!=null and job!=''">job=#{job},</if>
+
+			<if test="company!=null and company!=''">company=#{company},</if>
+
+			<if test="bankAccount!=null and bankAccount!=''">bankAccount=#{bankAccount},</if>
+
+			<if test="certificationState!=null and certificationState!=''">certificationState=#{certificationState},</if>
+
+			<if test="certificationType!=null and certificationType!=''">certificationType=#{certificationType},</if>
+
+			<if test="serviceLanguage!=null and serviceLanguage!=''">serviceLanguage=#{serviceLanguage},</if>
+
+			<if test="topCardURL!=null and topCardURL!=''">topCardURL=#{topCardURL},</if>
+
+			<if test="buttomCardURL!=null and buttomCardURL!=''">buttomCardURL=#{buttomCardURL},</if>
+
+			<if test="userType!=null and userType!=''">userType=#{userType},</if>
+
+			<if test="integral!=null and integral!=''">integral=#{integral},</if>
+
+			<if test="openingBank!=null and openingBank!=''">openingBank=#{openingBank},</if>
+			
+			<if test="initialPassword!=null and initialPassword!=''">initialPassword=#{initialPassword},</if>
+			
+			<if test="balance!=null and balance!=''">balance=#{balance}</if>
+		</trim>
+	</sql>
+
+	<sql id="key">
+		<trim suffixOverrides=",">
+			<if test="languagePair!=null and languagePair!=''">languagePair,</if>
+
+			<if test="domainId!=null and domainId!=''">domainId,</if>
+
+			<if test="procedureTypeId!=null and procedureTypeId!=''">procedureTypeId,</if>
+
+			<if test="transLevel!=null and transLevel!=''">transLevel,</if>
+
+			<if test="tel!=null and tel!=''">tel,</if>
+
+			<!-- <if test="qq!=null and qq!=''">qq,</if> -->
+
+			<if test="description!=null and description!=''">description,</if>
+
+			<if test="clientUserId!=null and clientUserId!=''">clientUserId,</if>
+
+			<if test="totalMoney!=null and totalMoney!=''">totalMoney,</if>
+
+			<if test="length!=null and length!=''">length,</if>
+
+			<if test="cycle!=null and cycle!=''">cycle,</if>
+
+			<if test="title!=null and title!=''">title,</if>
+
+			<if test="fileURL!=null and fileURL!=''">fileURL,</if>
+
+			<if test="publishModel!=null and publishModel!=''">publishModel,</if>
+
+			<if test="completeTime!=null and completeTime!=''">completeTime,</if>
+
+			<if test="publishTime!=null and publishTime!=''">publishTime,</if>
+
+			<if test="acceptState!=null and acceptState!=''">acceptState,</if>
+
+			<if test="EXPIRYDATE!=null and EXPIRYDATE!=''">EXPIRYDATE,</if>
+
+			<if test="needReference!=null and needReference!=''">needReference,</if>
+			
+			<if test="moneyKilo!=null and moneyKilo!=''">moneyKilo,</if>
+			
+			<if test="clientProjectTypeId!=null and clientProjectTypeId!=''">clientProjectTypeId,</if>
+			
+			<if test="transSingle!=null and transSingle!=''">transSingle,</if>
+			
+			<if test="transTotal!=null and transTotal!=''">transTotal,</if>
+		</trim>
+	</sql>
+
+	<sql id="value">
+		<trim suffixOverrides=",">
+			<if test="languagePair!=null and languagePair!=''">#{languagePair},</if>
+
+			<if test="domainId!=null and domainId!=''">#{domainId},</if>
+
+			<if test="procedureTypeId!=null and procedureTypeId!=''">#{procedureTypeId},</if>
+
+			<if test="transLevel!=null and transLevel!=''">${transLevel},</if>
+
+			<if test="tel!=null and tel!=''">#{tel},</if>
+
+			<!-- <if test="qq!=null and qq!=''">#{qq},</if> -->
+
+			<if test="description!=null and description!=''">#{description},</if>
+
+			<if test="clientUserId!=null and clientUserId!=''">#{clientUserId},</if>
+
+			<if test="totalMoney!=null and totalMoney!=''">#{totalMoney},</if>
+
+			<if test="length!=null and length!=''">#{length},</if>
+
+			<if test="cycle!=null and cycle!=''">#{cycle},</if>
+
+			<if test="title!=null and title!=''">#{title},</if>
+
+			<if test="fileURL!=null and fileURL!=''">#{fileURL},</if>
+
+			<if test="publishModel!=null and publishModel!=''">#{publishModel},</if>
+
+			<if test="completeTime!=null and completeTime!=''">#{completeTime},</if>
+
+			<if test="publishTime!=null and publishTime!=''">#{publishTime},</if>
+
+			<if test="acceptState!=null and acceptState!=''">#{acceptState},</if>
+
+			<if test="EXPIRYDATE!=null and EXPIRYDATE!=''">#{EXPIRYDATE},</if>
+
+			<if test="needReference!=null and needReference!=''">#{needReference},</if>
+			
+			<if test="moneyKilo!=null and moneyKilo!=''">#{moneyKilo},</if>
+			
+			<if test="clientProjectTypeId!=null and clientProjectTypeId!=''">#{clientProjectTypeId},</if>
+			
+			<if test="transSingle!=null and transSingle!=''">#{transSingle},</if>
+			
+			<if test="transTotal!=null and transTotal!=''">#{transTotal},</if>
+		</trim>
+	</sql>
+
+
+
+	<!-- 客户修改客户所有信息 -->
+	<update id="editCilentCustomerById" parameterType="int">
+		update clientUserD set
+		<include refid="updateclientUserkeyValue" />
+		where id='${id}'
+		<!-- update clientUserD set 1=1 <if test="headPortrait!=null and headPortrait!=''"> 
+			,headPortrait='${headPortrait}' </if> <if test="realName!=null and realName!=''"> 
+			,realName='${realName}' </if> <if test="cardId!=null and cardId!=''"> ,cardId='${cardId}' 
+			</if> <if test="openingBank!=null and openingBank!=''"> ,openingBank='${openingBank 
+			}' </if> <if test="sex!=null and sex!=''"> ,sex='${sex}' </if> <if test="roleName!=null 
+			and roleName!=''"> ,roleName='${roleName}' </if> <if test="birthday!=null 
+			and birthday!=''"> ,birthday='${birthday}' </if> <if test="address!=null 
+			and address!=''"> ,address='${address}' </if> <if test="tel!=null and tel!=''"> 
+			,tel='${tel}' </if> <if test="emaile!=null and emaile!=''"> ,emaile='${emaile}' 
+			</if> <if test="intro!=null and intro!=''"> ,intro='${intro}' </if> <if test="password!=null 
+			and password!=''"> ,password='${password}' </if> <if test="job!=null and 
+			job!=''"> ,job='${job}' </if> <if test="company!=null and company!=''"> ,company='${company}' 
+			</if> <if test="bankAccount!=null and bankAccount!=''"> ,bankAccount='${bankAccount}' 
+			</if> <if test="certificationState!=null and certificationState!=''"> ,certificationState='${certificationState}' 
+			</if> <if test="certificationType!=null and certificationType!=''"> ,certificationType='${certificationType}' 
+			</if> <if test="serviceLanguage!=null and serviceLanguage!=''"> ,serviceLanguage='${serviceLanguage}' 
+			</if> <if test="topCardURL!=null and topCardURL!=''"> ,topCardURL='${topCardURL}' 
+			</if> <if test="buttomCardURL!=null and buttomCardURL!=''"> ,buttomCardURL='${buttomCardURL}' 
+			</if> <if test="userType!=null and userType!=''"> ,userType='${userType}' 
+			</if> <if test="integral!=null and integral!=''"> ,integral='${integral}' 
+			</if> -->
+
+	</update>
+	
+	<!-- 客户唯一键 -->
+	<select id="findCardId" parameterType="string" resultType="ClientUserD">
+		select * from clientUserD where 1=1 
+		<if test="_parameter!=null and _parameter!=''">
+			${_parameter}
+		</if>
+	</select>
+	
+	
+	<!-- 需求唯一键 -->
+	<select id="queryOnly" parameterType="string" resultType="ClientCustomerNeed">
+		select * from clientCustomerNeedD where 1=1
+		<if test="_parameter!=null and _parameter!=''">
+			${_parameter}
+		</if>
+	</select>
+
+
+	<insert id="addCustomerNeed" parameterType="ClientCustomerNeed" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		clientCustomerNeedD
+		(
+		<include refid="key" />
+		)
+		values
+		(
+		<include refid="value" />
+		)
+		
+	</insert>
+
+
+	<!-- 首页展示，查询所有企业客户，按发布需求数量，等级排序 -->
+	<select id="findOnlineUser" parameterType="OnLineCustomer"
+		resultMap="findOnlineUserResultMap">
+		SELECT
+		TOP 9
+		count(ONLINE_COUNT_NEED.needID) as countNeed,
+		clientUserD.userName,
+		clientUserD.id,
+		clientUserD.headPortrait,
+		onLineCustomerD.Ltd
+		from ONLINE_COUNT_NEED,
+		clientUserD,
+		onLineCustomerD
+		where
+		ONLINE_COUNT_NEED.onlineId=onLineCustomerD.clientUserId
+		and
+		clientUserD.id=onLineCustomerD.clientUserId
+		<if test="registrationAddress!=null and registrationAddress!=''">
+			<choose>
+				<when test="registrationAddress!='中国'">
+					and (onLineCustomerD.country not like
+					'中国' and onLineCustomerD.countryEN not like'China')
+				</when>
+				<otherwise>
+					and (onLineCustomerD.country like '中国' or onLineCustomerD.countryEN like'China')
+				</otherwise>
+			</choose>
+
+		</if>
+
+		GROUP BY
+		ONLINE_COUNT_NEED.onlineId,
+		clientUserD.userName,
+		clientUserD.id,
+		clientUserD.headPortrait,
+		onLineCustomerD.Ltd
+		ORDER BY
+		countNeed DESC
+
+	</select>
+	<resultMap type="clientUserD" id="findOnlineUserResultMap">
+		<id column="userId" property="id" />
+		<result column="userName" property="userName" />
+		<result column="headPortrait" property="headPortrait" />
+		<result column="Ltd" property="topCardURL" />
+		<result column="countNeed" property="certificationType" />
+
+		<!-- <association property="onLineCustomer" javaType="onLineCustomer"> 
+			<result column="Ltd" property="Ltd"/> </association> -->
+	</resultMap>
+
+
+
+
+	<!-- 查询所有需求信息 -->
+	<select id="queryByPublishNeed" parameterType="com.web.util.Page"
+		resultType="ClientCustomerNeed">
+		<if test="dateType==0">
+			EXEC (
+			'select TOP ' +#{ pageSize }+ ' * from
+			clientCustomerNeedD WHERE ID NOT
+			IN(SELECT TOP ' +#{startIndex}+ ' ID
+			FROM clientCustomerNeedD ) '
+			)
+		</if>
+		<if test="dateType==1">
+			EXEC (
+			'select TOP ' +#{ pageSize }+ ' * from
+			clientCustomerNeedD WHERE ID NOT
+			IN(SELECT TOP ' +#{startIndex}+ ' ID
+			FROM clientCustomerNeedD where title
+			like ''%${msg}%'' and
+			publishModel like ''${msgType}'' and
+			acceptState like ''%${namemsg}%''
+			)and title
+			like ''%${msg}%'' and publishModel
+			like ''${msgType}'' and
+			acceptState like ''%${namemsg}%'' '
+			'select TOP ' +#{ pageSize }+ ' *
+			from
+			clientCustomerNeedD WHERE ID NOT
+			IN(SELECT TOP ' +#{startIndex}+ '
+			ID
+			FROM translatorD where title
+			like ''%${msg}%'' and publishModel like
+			''${msgType}'' )and title
+			like ''%${msg}%'' and publishModel like
+			''${msgType}'' '
+			)
+		</if>
+	</select>
+
+	<!-- 查询记录数 -->
+	<select id="getPublishNeedCount" parameterType="com.web.util.Page"
+		resultType="long">
+		<if test="dateType==0">
+			select count(*) from clientCustomerNeedD where title like
+			#{msg}
+		</if>
+		<if test="dateType!=0">
+			select count(*) from clientCustomerNeedD where
+			publishModel like #{msgType
+			} and title like #{msg} and acceptState
+			like #{namemsg}
+		</if>
+	</select>
+
+	<!-- 根据id查询需求信息 Z -->
+	<select id="findTransNeedByid" parameterType="int" resultType="ClientCustomerNeed">
+		SELECT clientCustomerNeedD.*, clientProjectTypeD.id,clientProjectTypeD.projectType FROM	
+		clientCustomerNeedD LEFT JOIN clientProjectTypeD on
+			clientCustomerNeedD.clientProjectTypeId = clientProjectTypeD.id
+		WHERE
+		clientCustomerNeedD.id=#{id}
+	</select>
+
+	<!-- 查询特定模块下需求数量 -->
+	<select id="queryAcceptCount" parameterType="ClientCustomerNeed"
+		resultType="int">
+		SELECT
+		count(*)
+		FROM
+		clientCustomerNeedD,
+		clientCustomerNeed_transD
+		WHERE
+		clientCustomerNeedD.id =
+		clientCustomerNeed_transD.clientCustomerNeedId
+		AND
+		clientCustomerNeed_transD.translatorId =#{id}
+		AND
+		clientCustomerNeedD.acceptState = #{acceptState}
+	</select>
+
+	<!-- 查询当前译员下所有需求信息Z -->
+	<select id="findTransNeed" parameterType="com.web.util.Page"
+		resultType="ClientCustomerNeed">
+		EXEC (
+		'select TOP ' +#{ pageSize }+ '  * from
+		clientCustomerNeedD
+		WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ '  ID
+		FROM clientCustomerNeedD
+		where id in (select clientCustomerNeedId   from
+		clientCustomerNeed_transD where
+		translatorId =''${dateType}'' and
+		publishModel
+		like ''${msgType}'' and acceptState=''发布中'' and (title
+		like ''%${msg}%''
+		or languagePair like
+		''%${msg}%'' or domainId in
+		(select id from fieldD where field
+		like ''%${msg}%'') or
+		procedureTypeId in (select id from
+		procedureTypeD where procedureType
+		like ''%${msg}%'' ) or
+		description like ''%${msg}%'' or cycle like
+		''%${msg}%'' or
+		acceptState like ''%${msg}%'' or publishModel like
+		''%${msg}%'' ) 
+		) order by publishTime  desc ) and id in
+		(select clientCustomerNeedId from
+		clientCustomerNeed_transD where
+		translatorId=''${dateType}'' and
+		publishModel
+		like ''${msgType}'' and acceptState=''发布中''
+		and (title like
+		''%${msg}%'' or languagePair like
+		''%${msg}%'' or domainId in (select
+		id from fieldD where field
+		like ''%${msg}%'') or procedureTypeId in
+		(select id from
+		procedureTypeD where procedureType like ''%${msg}%'' )
+		or
+		description like ''%${msg}%'' or cycle like ''%${msg}%'' or
+		acceptState like ''%${msg}%'' or publishModel like ''%${msg}%'' )
+		)  order by publishTime desc ' )
+	</select>
+
+
+	<!-- 修改需求接受状态 Z -->
+	<update id="updateAcceptState" parameterType="ClientCustomerNeed">
+		update
+		clientCustomerNeedD set acceptState=#{acceptState} where id=#{id}
+	</update>
+
+
+	<!-- 修改需求 -->
+	<update id="updateNeed" parameterType="ClientCustomerNeed">
+		update clientCustomerNeedD
+		<trim prefix="set" suffixOverrides=",">
+			<if test="acceptState!=null and acceptState!=''">acceptState=#{acceptState},</if>
+			<if test="completeTime!=null and completeTime!=''">completeTime=#{completeTime},</if>
+			<if test="cycle!=null and cycle!=''">cycle=#{cycle},</if>
+			<if test="description!=null and description!=''">description=#{description},</if>
+			<if test="domainId!=null and domainId!=''">domainId=#{domainId},</if>
+			<if test="languagePair!=null and languagePair!=''">languagePair=#{languagePair},</if>
+			<if test="length!=null and length!=''">length=#{length},</if>
+			<if test="procedureTypeId!=null and procedureTypeId!=''">procedureTypeId=#{procedureTypeId},</if>
+			<if test="publishModel!=null and publishModel!=''">publishModel=#{publishModel},</if>
+			<if test="publishTime!=null and publishTime!=''">publishTime=#{publishTime},</if>
+			<if test="qq!=null and qq!=''">qq=#{qq},</if>
+			<if test="tel!=null and tel!=''">tel=#{tel},</if>
+			<if test="title!=null and title!=''">title=#{title},</if>
+			<if test="totalMoney!=null and totalMoney!=''">totalMoney=#{totalMoney},</if>
+			<if test="transLevel!=null and transLevel!=''">transLevel=#{transLevel},</if>
+			<if test="moneyKilo!=null and moneyKilo!=''">moneyKilo=#{moneyKilo},</if>
+			<if test="clientProjectTypeId!=null and clientProjectTypeId!=''">clientProjectTypeId=#{clientProjectTypeId},</if>
+			<if test="transSingle!=null and transSingle!=''">transSingle=#{transSingle},</if>
+			<if test="transTotal!=null and transTotal!=''">transTotal=#{transTotal},</if>
+		</trim>
+		where id=#{id}
+
+	</update>
+
+	<select id="queryByWhere" parameterType="ClientCustomerNeed"
+		resultType="ClientCustomerNeed">
+		select * from clientCustomerNeedD where 1=1
+		<if test="id!=null and id!='' and id!=0"> and id=#{id}</if>
+
+		<if test="languagePair!=null and languagePair!=''"> and languagePair=#{languagePair}</if>
+
+		<if test="domainId!=null and domainId!=''"> and domainId=#{domainId}</if>
+
+		<if test="procedureTypeId!=null and procedureTypeId!=''">and procedureTypeId=#{procedureTypeId}</if>
+
+		<if test="transLevel!=null and transLevel!=''">and transLevel=${transLevel}</if>
+
+		<if test="tel!=null and tel!=''">and tel=#{tel}</if>
+
+		<if test="qq!=null and qq!=''">and qq=#{qq}</if>
+
+		<if test="description!=null and description!=''">and description=#{description}</if>
+
+		<if test="clientUserId!=null and clientUserId!=''">and clientUserId=#{clientUserId}</if>
+
+		<if test="totalMoney!=null and totalMoney!=''">and totalMoney=#{totalMoney}</if>
+
+		<if test="length!=null and length!=''">and length=#{length}</if>
+
+		<if test="cycle!=null and cycle!=''">and cycle=#{cycle}</if>
+
+		<if test="title!=null and title!=''">and title=#{title}</if>
+
+		<!-- <if test="fileURL!=null and fileURL!=''">and fileURL=#{fileURL}</if> -->
+
+		<if test="publishModel!=null and publishModel!=''">and publishModel=#{publishModel}</if>
+
+	</select>
+
+	<!-- 分页展示客户信息总记录数 -->
+	<select id="countCusNeesByPage" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(*) from clientCustomerNeedD where 1=1
+		<if test="msg!=null and msg!=''">
+			and description like '%${msg}%' or transLevel like
+			'%${msg}%'
+			or title like '%${msg}%'
+		</if>
+		<if test="namemsg!=null and namemsg!=''">
+			and length>=#{namemsg} and #{secondmsg}>length
+		</if>
+		<if test="phonemsg!=null and phonemsg!=''">
+			and domainId=#{phonemsg}
+		</if>
+		<if test="msgType!=null and msgType!=''">
+			and languagePair=#{msgType}
+		</if>
+		<if test="msgId!=null and msgId!=''">
+			and #{msgId}>=transLevel 
+		</if>
+		<if test="thirdmsg!=null and thirdmsg!=''">
+			and cycle=#{thirdmsg}
+		</if>
+		<if test="dateType!=null and dateType!='' and dateType!=1000 and dateType!='1000'">
+			and procedureTypeId=#{dateType}
+		</if>
+		and clientCustomerNeedD.acceptState='发布中'
+		and
+		clientCustomerNeedD.publishModel ='主动投标模式'
+		and clientCustomerNeedD.id
+		not in (select ClientCustomerNeedId from clientCustomerNeed_transD)
+	</select>
+
+	<!-- 分页展示客户信息 -->
+	<select id="findCusNeedByPage" parameterType="com.web.util.Page"
+		resultType="ClientCustomerNeed">
+		EXEC (
+		'select TOP ' + #{ pageSize }+ ' * from clientCustomerNeedD
+		WHERE 1=1 and clientCustomerNeedD.acceptState=''发布中'' and
+		clientCustomerNeedD.publishModel =''主动投标模式'' and
+		clientCustomerNeedD.id not in (select ClientCustomerNeedId from
+		clientCustomerNeed_transD) and ID NOT IN(SELECT TOP ' +#{startIndex}+
+		' ID FROM clientCustomerNeedD where 1=1 and
+		clientCustomerNeedD.acceptState=''发布中'' and
+		clientCustomerNeedD.publishModel =''主动投标模式'' and
+		clientCustomerNeedD.id not in (select ClientCustomerNeedId from
+		clientCustomerNeed_transD)'
+		<if test="msgType!=null and msgType!=''">+'and languagePair like ''%${msgType}%'''</if>
+		<if test="phonemsg!=null and phonemsg!=''">+' and domainId='+#{phonemsg}</if>
+		<if test="namemsg!=null and namemsg!=''">+' and length>='+#{namemsg}</if>
+		<if test="secondmsg!=null and secondmsg!=''">+' and '+#{secondmsg}+'>length'</if>
+		<if test="msg!= null and msg!=''">+'and (title like ''%${msg}%'' or transLevel like
+			''%${msg}%'' or description like ''${msg}'')'</if>
+		<if test="msgId!=null and msgId!=''"> +' and '+#{msgId}+'>=transLevel'  </if>
+		<if test="thirdmsg!=null and thirdmsg!=''">+' and cycle='+#{thirdmsg} </if>
+		<if test="dateType!=null and dateType!='' and dateType!=1000 and dateType!='1000'">+' and procedureTypeId='+#{dateType}</if>
+		+' order by clientCustomerNeedD.publishTime desc )'
+		<if test="msgType!=null and msgType !=''">+'and languagePair like ''%${msgType}%'''</if>
+		<if test="phonemsg!=null and phonemsg!=''">+' and domainId='+#{phonemsg}</if>
+		<if test="namemsg!=null and namemsg!=''">+' and length>='+#{namemsg}</if>
+		<if test="secondmsg!=null and secondmsg!=''">+' and '+#{secondmsg}+'>=length '</if>
+		<if test="msg!= null and msg!=''">+'and (title like ''%${msg}%'' or transLevel like
+			''%${msg}%'' or description like ''${msg}'')'</if>
+		<if test="msgId!=null and msgId!=''"> +' and '+#{msgId}+'>=transLevel'  </if>
+		<if test="thirdmsg!=null and thirdmsg!=''">+' and cycle='+#{thirdmsg} </if>
+		<if test="dateType!=null and dateType!='' and dateType!=1000 and dateType!='1000'">+' and procedureTypeId='+#{dateType}</if>
+		+' order by clientCustomerNeedD.publishTime desc '
+		)
+	</select>
+
+
+	<!-- 根据客户id，分页展示客户信息总记录数 -->
+	<select id="countCusNeesByCusId" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(*) from clientCustomerNeedD where 1=1 and
+		clientCustomerNeedD.acceptState!='已删除' and
+		clientCustomerNeedD.acceptState!='订单'
+		<if test="msgType!=null and msgType!=''">and clientUserId=#{msgType}</if>
+		<if test="secondmsg!=null and secondmsg!=''">and publishModel like '%${secondmsg}%'</if>
+		<if test="namemsg!=null and namemsg!=''">and acceptState like '%${namemsg}%'</if>
+		<if test="thirdmsg!=null and thirdmsg!=''">and (title like '%${thirdmsg}%' or languagePair like
+			'%${thirdmsg}%' or domainId in (select id from fieldD where field
+			like '%${thirdmsg}%') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like '%${thirdmsg}%') or
+			description like '%${thirdmsg}%' or cycle like '%${thirdmsg}%' or
+			acceptState like '%${thirdmsg}%' or publishModel like
+			'%${thirdmsg}%')</if>
+	</select>
+	
+	
+	<!-- 计算项目案号 -->
+	<select id="getNeedReference" parameterType="ClientCustomerNeed" resultType="String">
+		select sum(countid) from (select COUNT(id) countid from clientCustomerNeedD where clientUserId=${clientUserId} GROUP BY needReference) referenceCount
+	</select>
+
+
+	<!-- 根据客户id 分页展示客户信息 -->
+	<select id="findCusNeedByCusId" parameterType="com.web.util.Page"
+		resultType="ClientCustomerNeed">
+		EXEC (
+		'select TOP ' + #{ pageSize }+ ' * from clientCustomerNeedD
+		WHERE clientCustomerNeedD.acceptState!=''已删除'' and
+		clientCustomerNeedD.acceptState!=''订单'' and
+		clientUserId='+#{msgType}+' and ID NOT IN(SELECT TOP '
+		+#{startIndex}+
+		' ID FROM clientCustomerNeedD where 1=1 and
+		clientCustomerNeedD.acceptState!=''已删除'' and
+		clientCustomerNeedD.acceptState!=''订单'' and
+		clientUserId='+#{msgType}
+
+		<if test="secondmsg!=null and secondmsg!=''">+' and publishModel like ''%${secondmsg}%'''</if>
+		<if test="namemsg!=null and namemsg!=''">+' and acceptState like ''%${namemsg}%'''</if>
+		<if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like
+			''%${thirdmsg}%'') '</if>
+		+' order by clientCustomerNeedD.publishTime desc )'
+		<if test="secondmsg!=null and secondmsg!=''">+' and publishModel like ''%${secondmsg}%'''</if>
+		<if test="namemsg!=null and namemsg!=''">+' and acceptState like ''%${namemsg}%'''</if>
+		<if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like
+			''%${thirdmsg}%'' ) '</if>
+		+' order by clientCustomerNeedD.publishTime desc '
+		)
+	</select>
+
+
+	<!-- 添加企业信息 -->
+	<insert id="saveOnliCustomer" parameterType="OnLineCustomer">
+		insert into
+		onLineCustomerD
+		(
+		<include refid="onLinekey" />
+		)
+		values
+		(
+		<include refid="onLineValue" />
+		)
+	</insert>
+
+
+	<select id="findUserID" parameterType="int" resultType="OnLineCustomer">
+		select *
+		from onlineCustomerD where clientUserId=#{id}
+	</select>
+
+	<update id="updateOnlineCustomer" parameterType="OnLineCustomer">
+		update onlineCustomerD
+		<trim prefix="set" suffixOverrides=",">
+			<if test="nameZH!=null and nameZH!=''">nameZH=#{nameZH},</if>
+
+			<if test="nameEN!=null and nameEN!=''">nameEN=#{nameEN},</if>
+
+			<if test="nameShort!=null and nameShort!=''">nameShort=#{nameShort},</if>
+
+			<if test="size!=null and size!=''">size=#{size},</if>
+
+			<if test="scope!=null and scope!=''">scope=#{scope},</if>
+
+			<if test="address!=null and address!=''">address=#{address},</if>
+
+			<if test="Ltd!=null and Ltd!=''">Ltd=#{Ltd},</if>
+
+			<if test="cel!=null and cel!=''">cel=#{cel},</if>
+
+			<if test="tel!=null and tel!=''">tel=#{tel},</if>
+
+			<if test="intro!=null and intro!=''">intro=#{intro},</if>
+			
+			<if test="intro!=null and intro!=''">introEN=#{introEN},</if>
+
+			<if test="registrationURL!=null and registrationURL!=''">registrationURL=#{registrationURL},</if>
+
+			<if test="contact!=null and contact!=''">contact=#{contact},</if>
+
+			<if test="clientUserId!=null and clientUserId!=''">clientUserId=#{clientUserId},</if>
+
+			<if test="registrationNumber!=null and registrationNumber!=''">registrationNumber=#{registrationNumber},</if>
+
+			<if test="registrationAddress!=null and registrationAddress!=''">registrationAddress=#{registrationAddress},</if>
+			
+			<if test="registrationAddressEN!=null and registrationAddressEN!=''">registrationAddressEN=#{registrationAddressEN},</if>
+			
+			<if test="country!=null and country!=''">country=#{country},</if>
+			
+			<if test="countryEN!=null and countryEN!=''">countryEN=#{countryEN}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+
+	<select id="deleteNeed" parameterType="int">
+		delete from
+		clientCustomerNeedD where id=#{id}
+	</select>
+	<select id="queryClientCount" parameterType="int" resultType="int">
+		select count(*) from clientCustomerNeedD where clientUserId=#{id}
+	</select>
+
+	<sql id="need">
+		clientCustomerNeedD.id,
+		clientCustomerNeedD.languagePair,
+		clientCustomerNeedD.domainId,
+		clientCustomerNeedD.procedureTypeId,
+		clientCustomerNeedD.transLevel,
+		clientCustomerNeedD.tel,
+		clientCustomerNeedD.qq,
+		clientCustomerNeedD.description,
+		clientCustomerNeedD.clientUserId,
+		clientCustomerNeedD.totalMoney,
+		clientCustomerNeedD.length,
+		clientCustomerNeedD.cycle,
+		clientCustomerNeedD.title,
+		clientCustomerNeedD.fileURL,
+		clientCustomerNeedD.publishModel,
+		clientCustomerNeedD.completeTime,
+		clientCustomerNeedD.publishTime,
+		clientCustomerNeedD.acceptState
+	</sql>
+
+	<!-- 为首页根据客户信誉以及需求发布日期进行分页的排序展示数据的获取 -->
+	<select id="getNeeds" parameterType="com.web.util.Page"
+		resultType="ClientCustomerNeed">
+		EXEC ('select top '+#{pageSize}+'
+		<include refid="need" />
+		from clientCustomerNeedD ,clientUserD where clientUserD.id =
+		clientCustomerNeedD.clientUserId and clientCustomerNeedD.id not
+		in(select top '+#{startIndex}+' c3.id from clientCustomerNeedD c3,
+		clientUserD c4 where c4.id = c3.clientUserId and acceptState =''发布中''
+		and publishModel != ''选定译员模式'' and publishModel != ''系统分配模式''
+
+		<if test="msg!=null and msg!=''">
+			and (languagePair like ''%${msg }%'' or languagePair like
+			''%${namemsg }%'')
+		</if>
+		order by reputation desc ,publishTime DESC ) and acceptState =''发布中'' and publishModel
+		!= ''选定译员模式'' and publishModel != ''系统分配模式''
+		<if test="msg!=null and msg!=''">
+			and languagePair like ''%${msg }%''
+		</if>
+		order by reputation desc, publishTime DESC')
+	</select>
+
+	<select id="getTotalCount" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(*) from clientCustomerNeedD where publishModel !=
+		'选定译员模式' and publishModel != '系统分配模式' and  acceptState = '发布中'
+		<if test="msg!=null and msg!=''">
+			and languagePair like '%${msg }%'
+		</if>
+	</select>
+
+	<select id="queryNeedReference" parameterType="ClientCustomerNeed"
+		resultType="ClientCustomerNeed">
+		SELECT * from clientCustomerNeedD where
+		needReference=#{needReference} and
+		acceptState='发布中'
+	</select>
+
+	<!-- 记录企业客户总记录数 -->
+	<select id="countCompanyCustomerByPage" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(onlineCustomerD.id) from onlineCustomerD where 1=1
+		<if test="msgType!=null and msgType!=''"> and (onlineCustomerD.country like '${msgType}%' or onlineCustomerD.countryEN like '${msgType}%') </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'"> and (onlineCustomerD.country  like '中国' or onlineCustomerD.countryEN  like 'China')</when>
+				<when test="namemsg==2 or namemsg=='2'"> and onlineCustomerD.country  not like '中国%' and onlineCustomerD.countryEN  not like 'China'</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''"> and ( onlineCustomerD.registrationAddressEN like '%${msg}%'
+			or onlineCustomerD.registrationAddress like '%${msg}%'
+			or nameZH like
+			'%${msg}%' or nameShort like '%${msg}%' or
+			onlineCustomerD.scope like '%${msg}%' or onlineCustomerD.address like
+			'%${msg}%' or onlineCustomerD.intro like
+			'%${msg}%')
+		</if>
+	</select>
+
+
+	<!-- 分页展示企业客户信息 -->
+	<sql id="findCompanyCustomerByPageValue">
+		onlineCustomerD.nameZH,
+		onlineCustomerD.nameShort,
+		onLineCustomerD.ltd,
+		<!-- onLineCustomerD.nameEN, -->
+		onLineCustomerD. SIZE,
+		onLineCustomerD.scope,
+		onLineCustomerD.address,
+		onLineCustomerD.cel,
+		onLineCustomerD.tel,
+		onLineCustomerD.registrationURL,
+		onLineCustomerD.contact,
+		onLineCustomerD.clientUserId,
+		onLineCustomerD.registrationNumber,
+		onLineCustomerD.country,
+		onLineCustomerD.countryEN,
+		onLineCustomerD.intro
+		<!-- clientUserD.headPortrait,
+		clientUserD.id -->
+	</sql>
+	<select id="findCompanyCustomerByPage" parameterType="com.web.util.Page"
+		resultMap="findOnlineUserPageResultMap">
+		EXEC ( 'SELECT
+		TOP '+#{pageSize}+'
+		<include refid="findCompanyCustomerByPageValue" />
+		,
+		onLineCustomerD.registrationAddress,
+		onLineCustomerD.registrationAddressEN,
+		onLineCustomerD.id onlineId,
+		COUNT
+		(ONLINE_COUNT_NEED.onlineId) AS countNeed
+		FROM
+		ONLINE_COUNT_NEED,
+		onLineCustomerD,
+		clientUserD
+		WHERE
+		onLineCustomerD.ID NOT IN (
+		SELECT
+		TOP
+		'+#{startIndex}+' onLineCustomerD.id
+		FROM
+		onLineCustomerD,
+		ONLINE_COUNT_NEED
+		WHERE
+		ONLINE_COUNT_NEED.onlineId
+		=onLineCustomerD.clientUserId <!-- and
+		clientUserD.id=ONLINE_COUNT_NEED.onlineId-->'  
+		<if test="msgType!=null and msgType!=''">+' AND (country LIKE ''${msgType}%'' or countryEN like ''${msgType}%'') '</if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'">+' and (onlineCustomerD.country  like ''中国'' or onlineCustomerD.countryEN  like ''China'' )'</when>
+				<when test="namemsg==2 or namemsg=='2'">+' and onlineCustomerD.country  not like ''中国'' and onlineCustomerD.countryEN  not like ''China'' '</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''">+' AND (nameZH
+			like ''%${msg}%'' or nameShort like
+			''%${msg}%'' or scope like
+			''%${msg}%'' or onLineCustomerD.address
+			like ''%${msg}%''
+			or onLineCustomerD.intro like ''%${msg}%''
+			or
+			registrationAddress like ''%${msg}%''
+			or registrationAddressEN like ''%${msg}%'')'
+		</if>
+		+' GROUP BY
+		onLineCustomerD.id
+		ORDER BY
+		COUNT
+		(ONLINE_COUNT_NEED.onlineId)
+		DESC
+		)
+		AND ONLINE_COUNT_NEED.onlineId = onLineCustomerD.clientUserId<!--  and
+		clientUserD.id=ONLINE_COUNT_NEED.onlineId -->' 
+		<if test="msgType!=null and msgType!=''">+' AND (country LIKE ''${msgType}%'' or countryEN like ''${msgType}%'') '</if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg==1 or namemsg=='1'">+' and (onlineCustomerD.country  like ''中国'' or onlineCustomerD.countryEN  like ''China'') '</when>
+				<when test="namemsg==2 or namemsg=='2'">+' and onlineCustomerD.country  not like ''中国'' and onlineCustomerD.countryEN  not like ''China'' '</when>
+			</choose>
+		</if>
+		<if test="msg!=null and msg!=''">+' AND (nameZH
+			like ''%${msg}%'' or nameShort like
+			''%${msg}%'' or scope like
+			''%${msg}%'' or onLineCustomerD.address
+			like ''%${msg}%''
+			or onLineCustomerD.intro like ''%${msg}%''
+			or
+			registrationAddress like ''%${msg}%''
+			or registrationAddressEN like ''%${msg}%'')'
+		</if>
+		+' GROUP BY
+		<include refid="findCompanyCustomerByPageValue" />
+		,
+		onLineCustomerD.registrationAddress,
+		onLineCustomerD.registrationAddressEN,
+		onLineCustomerD.id
+		ORDER BY
+		countNeed DESC ')
+	</select>
+
+	<resultMap type="OnLineCustomer" id="findOnlineUserPageResultMap">
+		<id column="onlineId" property="id" />
+		<result column="nameZH" property="nameZH" />
+		<result column="nameShort" property="nameShort" />
+		<result column="ltd" property="ltd" />
+		<result column="scope" property="scope" />
+		<result column="address" property="address" />
+		<result column="SIZE" property="SIZE" />
+		<result column="cel" property="cel" />
+		<result column="tel" property="tel" />
+		<result column="headPortrait" property="registrationURL" />
+		<result column="contact" property="contact" />
+		<result column="clientUserId" property="clientUserId" />
+		<result column="registrationNumber" property="registrationNumber" />
+	</resultMap>
+
+
+	<select id="findNeedOrderBY" parameterType="ClientCustomerNeed" resultType="ClientCustomerNeed">
+		EXEC('select Top '+#{id}+' * from clientCustomerNeedD WHERE 1=1 '<!-- id虚拟查看条数 -->
+		<if test="clientUserId!=null and clientUserId!=''">
+		 +' and clientCustomerNeedD.clientUserId ='+#{clientUserId}
+		</if>
+		<if test="publishModel!=null and publishModel!=''">
+		 +' and clientCustomerNeedD.publishModel =''${publishModel}'''<!-- 发布模式 -->
+		</if>
+		<if test="cycle!=null and cycle!=''">
+		+' and clientCustomerNeedD.cycle=''${cycle}''' <!-- 周期 -->
+		</if>
+		<if test="acceptState!=null and acceptState!=''">
+		+' AND clientCustomerNeedD.acceptState = ''${acceptState}'''<!-- 状态 -->
+		</if>
+		
+		+' ORDER BY ${title} desc')<!-- 排序 -->
+	</select>
+	
+	<!-- 计算发布中状态的需求总价 -->
+	<select id="getPublishPayNum" parameterType="ClientCustomerNeed"  resultType="string">
+		select SUM(totalMoney) from clientCustomerNeedD where clientUserId=#{clientUserId} and acceptState='发布中'
+	</select>
+	
+	<!-- dder add -->
+	<select id="getIdentity"  resultType="int">
+		SELECT SCOPE_IDENTITY()
+	</select>
+</mapper>

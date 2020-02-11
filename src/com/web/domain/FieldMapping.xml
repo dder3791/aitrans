@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.FieldDao">
+	<!-- 查询所有的领域信息 -->
+	<select id="queryByAll"  resultType="Field">
+		select * from fieldD
+	</select>
+	<!-- 根据id查询该领域 -->
+	<select id="queryById" parameterType="int" resultType="Field">
+		select * from fieldD where id=#{id}
+	</select>
+    
+		<!-- 根据名称查询该领域id -->
+	<select id="getDomainId" parameterType="string" resultType="int">
+		select id from fieldD where field=#{domain}
+	</select>
+    
+     
+</mapper>

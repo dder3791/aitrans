@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.TranslatorDao">
+
+    <sql id="key">
+		<trim suffixOverrides=",">
+			<if test="tranPrice!=null and tranPrice!=''">tranPrice,</if>
+
+			<if test="prooPrice!=null and prooPrice!=''">prooPrice,</if>
+
+			<if test="dayTrans!=null and dayTrans!=''">dayTrans,</if>
+
+			<if test="transTotal!=null and transTotal!=''">transTotal,</if>
+
+			<if test="prooTotal!=null and prooTotal!=''">prooTotal,</if>
+
+			<if test="languages!=null and languages!=''">languages,</if>
+
+            <if test="auditPrice!=null and auditPrice!=''">auditPrice</if>
+            
+            <if test="auditTotal!=null and auditTotal!=''">auditTotal</if>
+            
+			<if test="transtionId!=null and transtionId!=''">transtionId,</if>
+
+			<if test="worksOrigin!=null and worksOrigin!=''">worksOrigin,</if>
+
+			<if test="worksTarget!=null and worksTarget!=''">worksTarget,</if>
+
+			<if test="domain!=null and domain!=''">domain,</if>
+            
+            <if test="applyState!=null and applyState!=''">#{applyState},</if>
+		</trim>
+	</sql>
+      
+    <sql id="value">
+		<trim suffixOverrides=",">
+			<if test="tranPrice!=null and tranPrice!=''">#{tranPrice},</if>
+
+			<if test="prooPrice!=null and prooPrice!=''">#{prooPrice},</if>
+
+			<if test="dayTrans!=null and dayTrans!=''">#{dayTrans},</if>
+
+			<if test="transTotal!=null and transTotal!=''">#{transTotal},</if>
+
+			<if test="prooTotal!=null and prooTotal!=''">#{prooTotal},</if>
+
+			<if test="languages!=null and languages!=''">#{languages},</if>
+			
+			 <if test="auditPrice!=null and auditPrice!=''">#{auditPrice}</if>
+            
+            <if test="auditTotal!=null and auditTotal!=''">#{auditTotal}</if>
+
+			<if test="transtionId!=null and transtionId!=''">#{transtionId},</if>
+
+			<if test="worksOrigin!=null and worksOrigin!=''">#{worksOrigin},</if>
+
+			<if test="worksTarget!=null and worksTarget!=''">#{worksTarget},</if>
+
+			<if test="domain!=null and domain!=''">#{domain},</if>
+			
+			<if test="applyState!=null and applyState!=''">#{applyState},</if>
+
+		</trim>
+	</sql>  
+      
+      
+     <sql id="updateValue">
+		<trim suffixOverrides=",">
+			<if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
+
+			<if test="nameid!=null and nameid!=''">nameid=#{nameid},</if>
+
+			<if test="job!=null and job!=''">job=#{job},</if>
+
+			<if test="gender!=null and gender!=''">gender=#{gender},</if>
+
+			<if test="address!=null and address!=''">address=#{address},</if>
+
+			<if test="birthday!=null and birthday!=''">birthday=#{birthday},</if>
+
+			<if test="tel!=null and tel!=''">tel=#{tel},</if>
+
+			<if test="email!=null and email!=''">email=#{email},</if>
+
+			<if test="isToolUse!=null and isToolUse!=''">isToolUse=#{isToolUse},</if>
+
+			<if test="companyAddress!=null and companyAddress!=''">companyAddress=#{companyAddress},</if>
+
+			<if test="accountNumber!=null and accountNumber!=''">accountNumber=#{accountNumber},</if>
+
+			<if test="point!=null and point!=''">point=#{point},</if>
+			
+			<if test="resumeUrl!=null and resumeUrl!=''">resumeUrl=#{resumeUrl},</if>
+			
+			<if test="proofreadUrl!=null and proofreadUrl!=''">proofreadUrl=#{proofreadUrl},</if>
+			
+			<if test="auditUrl!=null and auditUrl!=''">auditUrl=#{auditUrl},</if>
+			
+			<if test="openingBank!=null and openingBank!=''">openingBank=#{openingBank},</if>
+			
+			<if test="honor!=null and honor!=''">honor=#{honor},</if>
+			
+			<if test="domain!=null and domain!=''">domain=#{domain},</if>
+			
+			<if test="rank!=null and rank!=''">rank=#{rank},</if>
+			
+			<if test="problem!=null and problem!=''">problem=#{problem},</if>
+			
+			<if test="answer!=null and answer!=''">answer=#{answer},</if>
+			
+			<if test="language!=null and language!=''">language=#{language},</if>
+
+		</trim>
+	</sql>
+	 
+      <select id="saveQuotation" parameterType="Translator">
+         insert into
+		quotationD
+		(
+		<include refid="key" />
+		)
+		values
+		(
+		<include refid="value" />
+		)
+      </select>
+      
+      
+      
+      <!--向译员报价表填入翻译信息 -->
+    <insert id="saveTransQuotation" parameterType="Translator"  >
+     insert into quotationD(
+            tranPrice,dayTrans,transTotal,languages,transtionId,worksOrigin,worksTarget,domain
+		)
+		values
+		(
+		#{tranPrice},#{dayTrans},#{transTotal},#{languages},#{transtionId},#{worksOrigin},#{worksTarget},#{domain}
+		)
+     <!-- (tranPrice,prooPrice,dayTrans,transTotal,prooTotal,languages,transtionId,worksOrigin,worksTarget,domain) 
+     values(#{tranPrice},#{prooPrice},#{dayTrans},#{transTotal},#{prooTotal},#{languages},#{transtionId},#{worksOrigin},#{worksTarget},#{domain}) -->
+    </insert>
+    
+    
+   
+    
+    
+    
+    
+       <!--向译员报价表填入校对信息 -->
+    <insert id="saveProoQuotation" parameterType="Translator">
+     insert into quotationD(
+            tranPrice,dayTrans,transTotal,languages,prooTotal,prooPrice,transtionId,worksOrigin,worksTarget,domain
+		)
+		values
+		(
+		#{tranPrice},#{dayTrans},#{transTotal},#{languages},#{prooTotal},#{prooPrice},#{transtionId},#{worksOrigin},#{worksTarget},#{domain}
+		)
+    </insert>
+       <!--向译员报价表填入审核信息 -->
+    <insert id="saveAuditQuotation" parameterType="Translator">
+     insert into quotationD(
+            tranPrice,dayTrans,transTotal,languages,prooTotal,prooPrice,auditPrice,auditTotal,transtionId,worksOrigin,worksTarget,domain
+		)
+		values
+		(
+		#{tranPrice},#{dayTrans},#{transTotal},#{languages},#{prooTotal},#{prooPrice},#{transtionId},#{worksOrigin},#{worksTarget},#{domain}
+		)
+    </insert>
+    
+    
+    
+ 	<sql id="queryByWhere">
+ 		translatorD.id,
+ 		translatorD.nickname,
+ 		translatorD.accountName,
+ 		translatorD.domain,
+ 		translatorD.userUrl,
+ 		translatorD.language,
+ 		translatorD.job,
+ 		translatorD.degree,
+ 		translatorD.tel,
+ 		quotationD.*,
+ 		quotationD.majorTotal majorTotals,
+ 		quotationD.prooTotal prooTotal
+ 	</sql>
+ 	<!-- 对于译员信息进行多添加分页查询 -->
+	<select id="queryByAll" parameterType="com.web.util.Page"
+	resultType="Translator">
+	<if test="dateType==0">
+		EXEC (
+		'select TOP ' +#{ pageSize }+ ' * from translatorD WHERE nickname is not null
+		and level is not null and domain is not null and ID NOT IN(SELECT TOP
+		' +#{startIndex}+ ' ID FROM translatorD where nickname is not null and
+		level is not null and domain is not null
+		<if test="msgType != null"> and language like ''%${msgType}%''</if>
+		<if test="msg != null"> and nickname like ''${msg}''</if>
+		<if test="secondmsg != null"> and level like ''${secondmsg}''</if>
+		<if test="namemsg != null"> and degree like ''${namemsg}''</if>
+		order by rank desc )
+		<if test="msgType != null">and language like ''%${msgType}%''</if>
+		<if test="msg != null"> and nickname like ''${msg}''</if>
+		<if test="secondmsg != null"> and level like ''${secondmsg}''</if>
+		<if test="namemsg != null"> and degree like ''${namemsg}''</if>
+		order by rank desc '
+		)
+
+	</if>
+	<if test="dateType==1">
+		EXEC (
+		'select TOP ' +#{ pageSize }+ ' * from translatorD WHERE nickname is not null
+		and level is not null and domain is not null and ID NOT IN(SELECT TOP
+		' +#{startIndex}+ ' ID FROM translatorD where nickname is not null and
+		level is not null and domain is not null
+		<if test="msgType != null"> and language like ''%${msgType}%'' </if>
+		<if test="thirdmsg != null"> and domain like ''${thirdmsg}''</if>
+		<if test="msg != null"> and nickname like ''${msg}''</if>
+		<if test="secondmsg != null"> and level like ''${secondmsg}''</if>
+		<if test="namemsg != null"> and degree like ''${namemsg}''</if>
+		order by rank desc )
+		<if test="msgType != null">and language like ''%${msgType}%''</if>
+		<if test="thirdmsg != null"> and domain like ''${thirdmsg}''</if>
+		<if test="msg != null"> and nickname like ''${msg}''</if>
+		<if test="secondmsg != null"> and level like ''${secondmsg}''</if>
+		<if test="namemsg != null"> and degree like ''${namemsg}''</if>
+		order by rank desc '
+		)
+
+	</if>
+</select>
+	
+	
+	 <!--  根据类型查询记录数 -->
+    <select id="getTotalCount" parameterType="com.web.util.Page" resultType="long">
+    <if test="dateType==0">
+		select count(*) from translatorD where nickname is not null and level is not null and domain is not null <if test="msgType != null"> and language like #{msgType }</if><if test="msg != null"> and nickname  like #{msg}</if><if test="secondmsg != null"> and level like #{secondmsg}</if>
+		<!-- select count(*) from translatorD,quotationD where translatorD.id=quotationD.transtionId and quotationD.languages like #{msgType } and translatorD.nickname  like #{msg}  -->
+    </if>
+    <if test="dateType!=0">
+		select count(*) from translatorD where nickname is not null and level is not null and domain is not null <if test="msgType != null"> and  language like #{msgType }</if><if test="thirdmsg != null"> and domain like #{thirdmsg}</if><if test="msg != null"> and nickname  like #{msg}</if><if test="secondmsg != null"> and level like #{secondmsg}</if>
+		<!-- select count(*) from translatorD,quotationD where translatorD.id=quotationD.transtionId and quotationD.languages like #{msgType } and quotationD.domain like #{thirdmsg} and translatorD.nickname  like #{msg} and tranlevels like #{secondmsg} -->
+    </if>
+	</select>
+	
+    <!-- 添加译员信息 -->
+    <insert id="saveTranslator" parameterType="Translator">
+    insert into translatorD 
+    (accountName,nickname,password,initialPassword,registerTime,roleName,email,state,loginStatus,tel,point,honor,isVerifty,isProofread,isAudit,rank,isToolUse,certificationStatus) 
+    values
+    (#{accountName},#{nickname},#{password},#{initialPassword},getDate(),#{roleName},#{email},#{state},#{loginStatus},#{tel},#{point},#{honor},#{isVerifty},#{isProofread},#{isAudit},#{rank},#{isToolUse},#{certificationStatus});
+    </insert>
+    
+      <!-- 修改译员报价信息 -->
+    <!-- <update id="updatePrice" parameterType="Translator">
+    update quotationD set tranPrice=#{tranPrice}
+    <if test="domain!=null and domain!=''">
+			,domain=#{domain}
+		</if>
+    <if test="prooPrice!=null and prooPrice!=''">
+			,prooPrice=#{prooPrice}
+		</if>
+    <if test="dayTrans!=null and dayTrans!=''">
+			,dayTrans=#{dayTrans}
+		</if>
+    <if test="transTotal!=null and transTotal!=''">
+			,transTotal=#{transTotal}
+		</if>
+    <if test="prooTotal!=null and prooTotal!=''">
+			,prooTotal=#{prooTotal}
+		</if>
+    <if test="transtionId!=null and transtionId!=''">
+			,transtionId=#{transtionId}
+		</if>
+    <if test="languages!=null and languages!=''">
+			,languages=#{languages}
+		</if>
+    <if test="auditPrice!=null and auditPrice!=''">
+			,auditPrice=#{auditPrice}
+		</if>
+    <if test="auditTotal!=null and auditTotal!=''">
+			,auditTotal=#{auditTotal}
+		</if>
+    <if test="worksOrigin!=null and worksOrigin!=''">
+			 ,worksOrigin=#{worksOrigin}
+		</if>
+    <if test="worksTarget!=null and worksTarget!=''">
+			,worksTarget=#{worksTarget}
+		</if>
+    <if test="applyState!=null and applyState!=''">
+			,applyState=#{applyState}
+		</if>
+     where id=#{id}
+    </update>  -->
+    
+    
+   
+    
+       <!-- 查询译员信息 -->
+    <select id="findTranslator" parameterType="Translator" resultType="int">
+      select COUNT(*) from translatorD where 1=1
+      <if test="accountName!=null and accountName!=''">
+      	and accountName=#{accountName}
+      </if>
+      <if test="password!=null and password!=''">
+        and password=#{password}
+      </if>
+    </select>
+    
+    <!-- 修改译员状态信息 -->
+    <update id="updatestate" parameterType="Translator">
+    update translatorD set state=#{state} where id=#{id}
+    </update>
+    
+    
+    
+    <update id="updateWorkfile" parameterType="Translator">
+      update translatorD set worksOrigin=#{worksOrigin},worksTarget=#{worksTarget} where id=#{id}
+    </update>
+    
+     <!-- 修改译员资料信息 -->
+ 
+     <update id="updataTranslator" parameterType="Translator" >
+       update translatorD set nickname=#{nickname}
+       <if test="nameid!=null and nameid!=''">
+			,nameid=#{nameid}
+		</if>
+       <if test="job!=null and job!=''">
+			 ,job=#{job}
+		</if>
+       <if test="gender!=null and gender!=''">
+			,gender=#{gender}
+		</if>
+       <if test="address!=null and address!=''">
+			,address=#{address}
+		</if>
+       <if test="birthday!=null and birthday!=''">
+			,birthday=#{birthday}
+		</if>
+       <if test="tel!=null and tel!=''">
+			,tel=#{tel}
+		</if>
+       <if test="degree!=null and degree!=''">
+			,degree=#{degree}
+		</if>
+       <if test="email!=null and email!=''">
+			 ,email=#{email}
+		</if>
+       <if test="isToolUse == 0 or (isToolUse!=null and isToolUse!='')">
+			 ,isToolUse=#{isToolUse}
+		</if>
+       <if test="companyAddress!=null and companyAddress!=''">
+			,companyAddress=#{companyAddress}
+		</if>
+       <if test="accountNumber!=null and accountNumber!=''">
+            ,accountNumber=#{accountNumber}
+		</if>
+		<if test="point!=null and point!=''">
+            ,point=#{point}
+		</if>
+       <if test="resumeUrl!=null and resumeUrl!=''">
+            ,resumeUrl=#{resumeUrl}
+		</if>
+       <if test="proofreadUrl!=null and proofreadUrl!=''">
+            ,proofreadUrl=#{proofreadUrl}
+		</if>
+       <if test="auditUrl!=null and auditUrl!=''">
+            ,auditUrl=#{auditUrl}
+		</if>
+		 <if test="openingBank!=null and openingBank!=''">
+            ,openingBank=#{openingBank}
+		</if>
+		 <if test="honor!=null and honor!=''">
+            ,honor=#{honor}
+		</if>
+		 <if test="domain!=null and domain!=''">
+            ,domain=#{domain}
+		</if>
+		 <if test="rank!=null and rank!=''">
+            ,rank=#{rank}
+		</if>
+		 <if test="problem!=null and problem!=''">
+            ,problem=#{problem}
+		</if>
+		 <if test="answer!=null and answer!=''">
+            ,answer=#{answer}
+		</if>
+		<if test="realName!=null and realName!=''">
+            ,realName=#{realName}
+		</if>
+		<if test="language!=null and language!=''">
+			,language=#{language}
+		</if>
+		<if test="isVerifty!=null and isVerifty!=''">
+			,isVerifty=#{isVerifty}
+		</if>
+		<if test="isProofread!=null and isProofread!=''">
+			,isProofread=#{isProofread}
+		</if>
+		<if test="isAudit!=null and isAudit!=''">
+			,isAudit=#{isAudit}
+		</if>
+		<if test="wallet!=null and wallet!=''">
+			,wallet=#{wallet}
+		</if>
+       where id = #{id}
+    </update>
+    
+    
+    <update id="updateInfo" parameterType="Translator">
+       update translatorD set isToolUse=#{isToolUse} ,job=#{job},companyAddress=#{companyAddress},address=#{address}
+       <if test="tel!=null and tel!=''">
+			,tel=#{tel}
+		</if>
+       <if test="email!=null and email!=''">
+			 ,email=#{email}
+		</if>
+       <if test="nickname!=null and nickname!=''">
+			 ,nickname=#{nickname}
+		</if>
+       where id = #{id}
+    </update>
+    <!-- 执行修改 -->
+     <update id="updataTranslators" parameterType="Translator" >
+      update translatorD set nickname=#{nickname},nameid=#{nameid},job=#{job},gender=#{gender},address=#{address},birthday=#{birthday},tel=#{tel},email=#{email},isToolUse=#{isToolUse},companyAddress=#{companyAddress},accountNumber=#{accountNumber} where id = #{id}
+    </update> 
+    <!-- <update id="updataTranslators" parameterType="Translator" >
+       update translatorD 
+       <set>
+         <if test="nickname!=null and nickname!='' ">
+           nickname=#{nickname},
+         </if>
+         <if test="nameid!=null and nameid!='' ">
+           nameid=#{nameid},
+         </if>
+         <if test="job!=null and job!='' ">
+           job=#{job},
+         </if>
+         <if test="gender!=null and gender!='' ">
+           gender=#{gender},
+         </if>
+         <if test="address!=null and address!='' ">
+           address=#{address},
+         </if>
+         <if test="birthday!=null and birthday!='' ">
+           birthday=#{birthday},
+         </if>
+         <if test="tel!=null and tel!='' ">
+           tel=#{tel},
+         </if>
+         <if test="email!=null and email!='' ">
+           email=#{email},
+         </if>
+         <if test="isToolUse!=null and isToolUse!='' ">
+           isToolUse=#{isToolUse},
+         </if>
+         <if test="companyAddress!=null and companyAddress!='' ">
+           companyAddress=#{companyAddress},
+         </if>
+         <if test="accountNumber!=null and accountNumber!='' ">
+           accountNumber=#{accountNumber}
+         </if>
+       </set>
+        where id = #{id}
+    </update> -->
+   <!--  根据id查询报价信息 -->
+    <select id="queryQuotationByid" parameterType="int" resultType="Translator">
+      select *from quotationD where id=#{id} 
+    </select>
+    
+    <!-- 根据id查询译员信息 -->
+    <select id="queryTransById" parameterType="int" resultType="Translator">
+    select * from translatorD where id=#{transId}
+    </select>
+    
+   <!--  查询译员下报价信息 -->
+    <select id="queryByQuotation" parameterType="int" resultType="Translator">
+      SELECT
+	translatorD.realName, quotationD.id AS qid,
+	quotationD.tranPrice,
+	quotationD.prooPrice,
+	quotationD.dayTrans,
+	quotationD.dayProo,
+	quotationD.dayAudit,
+	quotationD.majorTotal,
+	quotationD.prooTotal,
+	quotationD.tranlevels,
+    quotationD.proolevels,
+    quotationD.auditlevels,
+	quotationD.languages,
+    quotationD.domain,
+	quotationD.transtionId,
+	quotationD.worksOrigin,
+	quotationD.worksTarget,
+	quotationD.applyStateT,
+	quotationD.applyStateP,
+	quotationD.applyStateA
+    FROM
+	translatorD,
+	quotationD
+    WHERE
+	translatorD.id = quotationD.transtionId
+    AND transtionId = #{transId}
+    </select>
+    
+    <select id="queryByQuotationOnlyLanguage" parameterType="int" resultType="Translator">
+      SELECT
+		distinct(quotationD.languages) languages
+      FROM
+		translatorD,
+		quotationD
+      WHERE
+		translatorD.id = quotationD.transtionId
+        AND transtionId = #{transId}
+    </select>
+   
+
+    
+    <!-- 根据语言查询译员信息 -->
+    <select id="queryTransByLanguage" parameterType="Translator" resultType="Translator">
+     select * from translatorD where language=#{language}
+    </select>
+    
+    <!-- 根据条件查询符合信息的招标译员 -->
+    <select id="getCountTransNeed" parameterType="Translator" resultType="long">
+        SELECT
+	       COUNT (*)
+        FROM
+	    translatorD,
+	    quotationD
+        WHERE
+        translatorD.id = quotationD.transtionId
+       <if test="tranlevels!=null and tranlevels!=''">
+        and #{tranlevels}&lt;=quotationD.tranlevels 
+       </if>
+       <if test="proolevels!=null and proolevels!=''">
+        and #{proolevels}&lt;=quotationD.proolevels 
+       </if>
+       <if test="auditlevels!=null and auditlevels!=''">
+        and #{auditlevels}&lt;=quotationD.auditlevels 
+       </if>
+        AND quotationD.languages =#{languages}
+        AND quotationD.domain LIKE '%${domain}%'
+        AND quotationD.transtionId =#{id}
+    </select>
+	
+    
+    
+	<!-- 查询当前手机是否重复 -->
+	<select id="checkUserName" parameterType="Translator" resultType="int">
+	  select COUNT(*) from translatorD where tel=#{tel}
+	</select>
+	<!-- 查询当前用户名是否重复 -->
+	<select id="checkAccountName" parameterType="Translator" resultType="int">
+	  select COUNT(*) from translatorD where accountName=#{accountName}
+	</select>
+	<!-- 查询当前邮箱是否重复 -->
+	<select id="checkEmail" parameterType="Translator" resultType="int">
+	select COUNT(*) from translatorD where email=#{email}
+	</select>
+	
+	<select id="checknameid" parameterType="Translator" resultType="int">
+	 select count(*) from translatorD where nameid=#{nameid}
+	</select>
+	
+	<!-- 修改用户头像 -->
+	<update id="updateUrl" parameterType="Translator">
+	  update translatorD set userUrl=#{userUrl} where id=#{id}
+	</update>
+	 
+	   <!-- 查询用户id -->
+    <select id="findTransById" parameterType="Translator" resultType="Translator">
+      select * from translatorD where (email=#{accountName} or tel=#{accountName} or accountName=#{accountName}) and password=#{password} 
+    </select>
+    
+    <!-- 根据条件查询译员 -->
+	<select id="queryByWhere" resultType="Translator" parameterType="Translator">
+		select
+		<include refid="queryByWhere"/>
+		from translatorD,quotationD<!-- ,majorD -->
+		where 1=1
+		
+		<if test="language!=null and language!=''">	and translatorD.language like '%${language}%'</if>
+		
+		<!-- <if test="level!=null and level!=''">and quotationD.levels='${level}'</if> -->
+		
+		<!-- <if test="domain!=null and domain!=''">	and translatorD.domain like '%${domain}%'</if> -->
+		
+		<if test="state!=null and state!=''">and translatorD.state like '%${state}%'</if>
+		
+		<if test="domain!=null and domain!=''"> and quotationD.domain like #{domain}</if>
+		
+		<if test="languages!=null and languages!=''"> and quotationD.languages=#{languages}</if>
+		
+		<if test="tranlevels!=null and tranlevels!=''">and quotationD.tranlevels>='${tranlevels}'</if>
+		
+		<if test="proolevels!=null and proolevels!=''">and quotationD.proolevels>='${proolevels}'</if>
+		
+		<if test="auditlevels!=null and auditlevels!=''">and quotationD.auditlevels>='${auditlevels}'</if>
+		<if test="msg!=null and msg!=''">
+			<choose>
+		   	 	<when test="msg==2">
+		          and (translatorD.isProofread =2 or translatorD.isAudit=2) 
+		        </when>
+		        <when test="msg==3">
+		          and translatorD.isAudit=2
+		        </when>
+		        <otherwise>
+		          and (translatorD.isVerifty=2 or translatorD.isProofread =2 or translatorD.isAudit=2)
+		        </otherwise>
+		      </choose>
+		</if>
+		<if test="msg2!=null and msg2!=''">
+			and translatorD.id=#{msg2}
+		</if>
+		and  translatorD.id=quotationD.transtionId
+	</select>
+	
+	<!-- 根据译员id查询成交数量 -->
+	<select id="countProjectByTransId" parameterType="int" resultType="int">
+		select COUNT(translatorId) from tra_projectD where translatorId=#{id}
+	</select>
+	
+	<!-- 根据译员id查询译员评价数量 -->
+	<select id="countEvaluateByTransId" parameterType="int" resultType="int">
+		select COUNT(translatorId) from evaluateD where translatorId=#{id}
+	</select>
+	
+	
+	
+	<!-- 验证译员资料 -->
+	<select id="selectTransInfo" parameterType="int" resultType="long">
+      SELECT
+	    count(*)
+     FROM
+       quotationD
+    WHERE
+      quotationD.domain is NOT NULL 
+      and quotationD.tranlevels is not NULL
+      and quotationD.languages is not NULL
+      and quotationD.transtionId=#{transId}
+	</select>
+	
+	<!-- 根据id查询需求量 -->
+	<select id="queryTransNeedCount" parameterType="com.web.util.Page" resultType="long">
+	     SELECT
+	     count(*)
+     FROM
+      clientCustomerNeedD,
+	  clientCustomerNeed_transD
+    WHERE
+    clientCustomerNeedD.id=clientCustomerNeed_transD.clientCustomerNeedId 
+	and clientCustomerNeed_transD.translatorId=#{msgId}
+    and  clientCustomerNeedD.publishModel like '%${msgType}%'
+      and  clientCustomerNeedD.acceptState='发布中'
+			and (title like '%${msg}%' or languagePair like
+			'%${msg}%' or domainId in (select id from fieldD where field
+			like '%${msg}%') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like '%${msg}%' ) or
+			description like '%${msg}%' or cycle like '%${msg}%' or
+			acceptState like '%${msg}%' or publishModel like '%${msg}%' )
+	</select>
+	<!-- 修改密码 -->
+   <update id="updatePassword" parameterType="Translator" >
+     update translatorD set password=#{password},initialPassword=#{initialPassword} where id=#{id}
+   </update>
+   
+	<select id="getCount" parameterType="Translator" resultType="long">
+		select count(*) from translatorD where 1=1 
+		<if test="domain!='' and domain!=null">
+			and domain like '%${domain }%'
+		</if>
+		<if test="language!=null and language!=''">
+			and language = #{language }
+		</if>
+		<if test="level!=0">
+			and level = #{level }
+		</if>
+	</select>
+	
+	<select id="getNewTranslators" resultType="Translator">
+	select top(1) * from translatorD where  nickname!='' and  registerTime!='' order by NEWID()  
+	</select>
+	
+	<select id="findNickname" parameterType="int" resultType="String">
+	  select nickname from translatorD where id=#{id}
+	</select>
+	
+	<!-- 修改验证状态 -->
+	<update id="updateVerifty" parameterType="Translator">
+	    update translatorD set certificationStatus=#{certificationStatus},realName=#{realName},nameid=#{nameid},birthday=#{birthday},gender=#{gender} where id=#{id}
+	</update>
+	<select id="queryByName" parameterType="string" resultType="Translator">
+		 select * from translatorD where accountName=#{name } or email = #{name }  or tel = #{name }
+	</select>
+	
+	<select id="queryByCardId" parameterType="Translator" resultType="Translator">
+		 select * from translatorD where (accountName=#{accountName } or email = #{accountName } or tel = #{accountName } )  and nameid=#{nameid } and realName = #{realName }
+	</select>
+	
+	<select id="getIphone" parameterType="string" resultType="string">
+		select top 1 tel from translatorD where accountName=#{name } or email = #{name }  or tel = #{name }
+	</select>
+	
+	
+	<!--根据条件查询译员报价  -->
+	<select id="queryQuotation" parameterType="Translator" resultType="Translator">
+		select * from quotationD where 1=1
+		<if test="domain!=null and domain!=''">
+			and domain like '%${domain}%'
+		</if>
+		<if test="languages!=null and languages!=''">
+			and languages like '%${languages}%'
+		</if>
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+	</select>
+
+	
+	<select id="getSecurityQuestion" parameterType="string" resultType="string">
+		select top 1 problem from translatorD where accountName=#{name } or email = #{name }  or tel = #{name }
+	</select>
+	
+	<select id="checkAnswer" parameterType="Translator" resultType="Translator">
+		select * from translatorD where (accountName=#{accountName } or email = #{accountName } or tel = #{accountName } ) and problem=#{problem } and answer=#{answer }
+	</select>
+
+	
+	<!-- 查询当前译员所在排名情况 -->
+	<select id="queryByTranRank"  resultType="Translator">
+	  select ROW_NUMBER()
+	   over
+	   (ORDER BY rank DESC) as msg,* from translatorD 
+	   where nickname is not null 
+	   and domain is not null 
+	   and  level is not null 
+	   and language is not null 
+	</select>
+	
+	
+	<select id="checkPapers" resultType="long" parameterType="Translator" >
+        select count(*) from translatorD where 1 = 1
+           <if test="tel != null and tel!=''"></if>
+                and tel = #{tel}
+            <if test="email != null and email!=''"></if>
+                and email = #{email}
+            <if test="nameid != null and nameid!=''"></if>
+                and nameid = #{nameid}
+            <if test="accountNumber != null and accountNumber!=''"></if>
+                and accountNumber = #{accountNumber}
+    </select>
+ 
+ 	<!-- 根据译员Id，左查询译员报价信息 -->
+	<select id="findtransQuestion" parameterType="Translator" resultType="Translator">
+		select translatorD.*,quotationD.* from translatorD LEFT JOIN quotationD on translatorD.id=quotationD.transtionId
+		where 1=1
+		<if test="transtionId!=null and transtionId!=''">
+			and translatorD.id=#{transtionId}
+		</if>
+		<if test="languages!=null and languages!=''">
+			and quotationD.languages like '%${languages}%'
+		</if>
+		<if test="domain!=null and domain!=''">
+			and quotationD.domain like '%${domain}%'
+		</if>
+	</select>
+	
+	<!-- 修改译员余额 -->
+	<update id="updateTransWallet" parameterType="Translator">
+		update translatorD set wallet=#{wallet} where id=#{id}
+	</update>
+	
+	<!-- 查询中间表需求对应译员之外的译员信息-->
+	<select id="queryOutCusNeed" parameterType="Translator" resultType="Translator">
+		SELECT
+		translatorD.*
+	FROM
+		translatorD,quotationD
+	WHERE
+		translatorD.id not IN (
+			SELECT
+				clientCustomerNeed_transD.translatorId
+			FROM
+				clientCustomerNeed_transD where clientCustomerNeed_transD.clientCustomerNeedId=#{id}
+		)
+		
+		<if test="language!=null and language!=''">	and translatorD.language like '%${language}%'</if>
+		
+		<!-- <if test="level!=null and level!=''">and quotationD.levels='${level}'</if> -->
+		
+		<!-- <if test="domain!=null and domain!=''">	and translatorD.domain like '%${domain}%'</if> -->
+		
+		<if test="state!=null and state!=''">and translatorD.state like '%${state}%'</if>
+		
+		<if test="domain!=null and domain!=''"> and quotationD.domain like #{domain}</if>
+		
+		<if test="languages!=null and languages!=''"> and quotationD.languages=#{languages}</if>
+		
+		<if test="tranlevels!=null and tranlevels!=''">and quotationD.tranlevels>='${tranlevels}'</if>
+		
+		<if test="proolevels!=null and proolevels!=''">and quotationD.proolevels>='${proolevels}'</if>
+		
+		<if test="auditlevels!=null and auditlevels!=''">and quotationD.auditlevels>='${auditlevels}'</if>
+		<if test="msg!=null and msg!=''">
+			<choose>
+		   	 	<when test="msg==2">
+		          and (translatorD.isProofread =2 or translatorD.isAudit=2) 
+		        </when>
+		        <when test="msg==3">
+		          and translatorD.isAudit=2
+		        </when>
+		        <otherwise>
+		          and (translatorD.isVerifty=2 or translatorD.isProofread =2 or translatorD.isAudit=2)
+		        </otherwise>
+		      </choose>
+		</if>
+		<if test="msg2!=null and msg2!=''">
+			and translatorD.id=#{msg2}
+		</if>
+		and  translatorD.id=quotationD.transtionId
+	</select>
+
+	
+	<select id="checkNickname" parameterType="String" resultType="Integer">
+		select count(nickname) from translatorD where nickname=#{nickname}
+	</select>
+	
+	<update id="updateQualify" parameterType="Translator">
+		update translatorD set 
+		isVerifty=#{isVerifty},
+		isProofread=#{isProofread},
+		isAudit=#{isAudit},
+		resumeUrl=#{resumeUrl},
+		proofreadUrl=#{proofreadUrl},
+		auditUrl=#{auditUrl},
+		transUrl=#{transUrl}
+		where id=#{id}
+	</update>
+	
+	<select id="getDomainsByLanguage" parameterType="HashMap" resultType="String">
+		select [domain] from quotationD where transtionId = #{id} and languages = #{language}
+	</select>
+	
+	<select id="notinDomains" parameterType="HashMap" resultType="String">
+		select field from fieldD <if test="notin != null and notin != ''">where field not in (${notin})</if>
+	</select>
+	
+	<select id="selectQuoLanguages" parameterType="int" resultType="Translator">
+		select DISTINCT(languages),MAX(tranlevels) tranlevels,max(proolevels) proolevels,MAX(auditlevels) auditlevels from quotationD where transtionId = #{transId} GROUP BY languages
+	</select>
+	
+	<insert id="addQuo" parameterType="Translator">
+		INSERT INTO quotationD (
+			transtionId,
+			languages,
+			[domain],
+			tranlevels,
+			proolevels,
+			auditlevels,
+			applyStateT,
+			applyStateP,
+			applyStateA,
+			majorTotal,
+			prooTotal,
+			auditTotal,
+			tranPrice,
+			prooPrice,
+			auditPrice,
+			dayTrans,
+			dayProo,
+			dayAudit,
+			worksOrigin,
+			worksTarget,
+			wantTranPrice,
+			wantProoPrice,
+			wantAuditPrice
+		)
+		VALUES
+	(#{id},#{languages},#{domain},#{tranlevels},#{proolevels},#{auditlevels},#{applyStateT},#{applyStateP},#{applyStateA},#{majorTotals},#{prooTotal},#{auditTotal},#{tranPrice},#{prooPrice},#{auditPrice},#{dayTrans},#{dayProo},#{dayAudit},#{worksOrigin},#{worksTarget},#{wantTranPrice},#{wantProoPrice},#{wantAuditPrice})
+	</insert>
+	
+	<select id="getQuoByIdAndLanguage" parameterType="HashMap" resultType="Quotation">
+		SELECT
+			id,
+			transtionId,
+			languages,
+			[domain],
+			tranlevels,
+			applyStateT,
+			tranPrice,
+			majorTotal,
+			proolevels,
+			applyStateP,
+			prooPrice,
+			prooTotal,
+			auditlevels,
+			applyStateA,
+			auditPrice,
+			auditTotal,
+			dayTrans,
+			dayProo,
+			dayAudit,
+			worksOrigin,
+			worksTarget,
+			wantTranPrice,
+			wantProoPrice,
+			wantAuditPrice
+		FROM
+			quotationD
+		WHERE
+			transtionId = #{id}
+		AND languages = #{languages}
+	</select>
+	
+	<select id="findFieldId" parameterType="String" resultType="int">
+		select id from fieldD where field = #{domain}
+	</select>
+	
+	<update id="updateQuo" parameterType="Translator">
+		update quotationD set
+			majorTotal = #{majorTotals},
+			prooTotal = #{prooTotal},
+			auditTotal = #{auditTotal},
+			applyStateT = #{applyStateT},
+			tranPrice = #{tranPrice},
+			applyStateP = #{applyStateP},
+			prooPrice = #{prooPrice},
+			applyStateA = #{applyStateA},
+			auditPrice = #{auditPrice},
+			dayTrans = #{dayTrans},
+			dayProo = #{dayProo},
+			dayAudit = #{dayAudit},
+			worksOrigin = #{worksOrigin},
+			worksTarget = #{worksTarget},
+			wantTranPrice = #{wantTranPrice},
+			wantProoPrice = #{wantProoPrice},
+			wantAuditPrice = #{wantAuditPrice},
+			tranlevels = #{tranlevels},
+			proolevels = #{proolevels},
+			auditlevels = #{auditlevels}
+		where transtionId = #{id} and languages = #{languages} and [domain] = #{domain}
+	</update>
+	
+	<select id="getTransLanguages" parameterType="int" resultType="LanguagesVo">
+		select DISTINCT(languages) languageName from quotationD where transtionId = #{id}
+	</select>
+	
+	
+	<select id="countTranPage" parameterType="com.web.util.Page" resultType="long">
+		select count(*) from  (select translatorD.id from translatorD,quotationD where translatorD.id =quotationD.transtionId
+		<if test="msg!= null and msg!=''"> and translatorD.nickname like '%${msg}%'</if>
+		<if test="namemsg != null and namemsg!=''"> and  quotationD.languages=#{namemsg}</if>
+		<if test="phonemsg != null and phonemsg!=''"> and quotationD.domain like '%${phonemsg}%'</if>
+		<if test="msgType==null and msgType==''">
+			<!-- 不选择翻译流程 ，等级 为翻译等级，或校对等级，或审核等级-->
+			<if test="secondmsg!=null and secondmsg!=''">
+				and (quotationD.tranlevels=#{secondmsg} or quotationD.proolevels=#{secondmsg} or quotationD.auditlevels=#{secondmsg})
+			</if>
+		</if>
+		<if test="msgType!=null and msgType!=''">
+			<if test="msgType=='1' or msgType==1">
+				<if test="secondmsg!=null and secondmsg!=''">
+					and quotationD.tranlevels=#{secondmsg}
+				</if>
+				and applyStateT=1
+			</if>
+			<if test="msgType=='2' or msgType==2">
+				<if test="secondmsg!=null and secondmsg!=''">
+					and quotationD.proolevels=#{secondmsg}
+				</if>
+				and applyStateP=1
+			</if>
+			<if test="msgType=='3' or msgType==3">
+				<if test="secondmsg!=null and secondmsg!=''">
+					and quotationD.auditlevels=#{secondmsg}
+				</if>
+				and applyStateA=1
+			</if>
+		</if>
+		GROUP BY translatorD.id ) a 
+	</select>
+	
+	<sql id="transByPage">
+ 		b.id,
+		b.nickname,				
+		b.degree,
+		b.userUrl,
+		
+		<!-- quotationD.majorTotal majorTotals,
+		quotationD.prooTotal prooTotal -->
+ 	</sql>
+ 	
+	<select id="transByPage" parameterType="com.web.util.Page"
+		resultType="Translator">
+		EXEC (
+		   'SELECT
+				TOP '+#{ pageSize }+' 
+					<include refid="transByPage"/>
+					sum(quotationD.majorTotal) majorTotals,
+					SUM(quotationD.prooTotal) prooTotals,
+					<if test="namemsg != null and namemsg!=''">VCB.VLANGUAGE language,</if>
+					<if test="namemsg == null or namemsg==''">b.language language,</if>
+					<if test="(msgType==null or msgType=='') and (secondmsg=='' or secondmsg==null) ">MAX(quotationD.tranlevels) level,</if>
+					<if test="(msgType==null or msgType=='') and secondmsg!='' and secondmsg!=null">quotationD.tranlevels level,</if>
+					<if test="secondmsg!='' and secondmsg!=null">
+						<if test="msgType=='1' or msgType==1 ">
+								quotationD.tranlevels level,
+						</if>
+						<if test="msgType=='2' or msgType==2">
+								quotationD.proolevels level,
+						</if>
+						<if test="msgType=='3' or msgType==3">
+								quotationD.auditlevels level,
+						</if>
+					</if>
+					<if test="msgType!=null and msgType!=''">
+						<if test="msgType=='1' or msgType==1">
+							<if test="secondmsg==null or secondmsg==''">
+								MAX(quotationD.tranlevels) level,
+							</if>
+						</if>
+						<if test="msgType=='2' or msgType==2">
+							<if test="secondmsg==null or secondmsg==''">
+								MAX(quotationD.proolevels) level,
+							</if>
+						</if>
+						<if test="msgType=='3' or msgType==3">
+							<if test="secondmsg==null or secondmsg==''">
+								MAX(quotationD.auditlevels) level,
+							</if>
+						</if>
+					</if>
+					
+					domain = STUFF(
+						(
+							SELECT DISTINCT
+							'','' + VCA.VDOMAIN
+							FROM
+								CLIENT_TRAN_DOMAIN VCA
+							WHERE
+							<if test="namemsg != null and namemsg!=''">VCA.VLANGUAGE=VCB.VLANGUAGE FOR XML PATH ('''')</if>
+							<if test="namemsg == null or namemsg==''"> VCA.VTID = VCB.VTID FOR XML PATH ('''')</if>	
+						),
+						1,
+						1,
+						''''
+					)
+			FROM
+				quotationD,
+				CLIENT_TRAN_DOMAIN VCB,
+				(
+					SELECT
+						*
+					FROM
+						translatorD
+					WHERE
+						translatorD.id IN (
+							SELECT
+								translatorD.id tid
+							FROM
+								translatorD,
+								quotationD
+							WHERE
+								translatorD.id = quotationD.transtionId
+							GROUP BY
+								translatorD.id
+						)
+				) b
+			WHERE
+				b.id = quotationD.transtionId
+				and VCB.VLANGUAGE=quotationD.languages
+				and VCB.VTID=quotationD.transtionId '
+				
+				<if test="msg!= null and msg!=''"> +' and b.nickname like ''%${msg}%'' '</if>
+				<if test="namemsg != null and namemsg!=''">+' and  quotationD.languages like ''%${namemsg}%'' '</if>
+				<if test="phonemsg != null and phonemsg!=''">+' and quotationD.domain like ''%${phonemsg}%'' '</if>
+				<if test="msgType==null and msgType==''">
+				<!-- 不选择翻译流程 ，等级 为翻译等级，或校对等级，或审核等级-->
+				<if test="secondmsg!=null and secondmsg!=''">
+					+' and (quotationD.tranlevels='+#{secondmsg}+' or quotationD.proolevels='+#{secondmsg}+' or quotationD.auditlevels='+#{secondmsg}+')'
+				</if>
+				</if>
+				<if test="msgType!=null and msgType!=''">
+					<if test="msgType=='1' or msgType==1">
+						<if test="secondmsg!=null and secondmsg!=''">
+							+' and quotationD.tranlevels='+#{secondmsg}+' '
+						</if>
+						+' and applyStateT=1 '
+					</if>
+					<if test="msgType=='2' or msgType==2">
+						<if test="secondmsg!=null and secondmsg!=''">
+							+' and quotationD.proolevels='+#{secondmsg}+' '
+						</if>
+						+' and applyStateP=1 '
+					</if>
+					<if test="msgType=='3' or msgType==3">
+						<if test="secondmsg!=null and secondmsg!=''">
+							+' and quotationD.auditlevels='+#{secondmsg}+' '
+						</if>
+						+' and applyStateA=1 '
+					</if>
+				</if>
+				+' AND b.id NOT IN (
+					SELECT
+						TOP '+#{startIndex}+' ID
+					FROM
+						(
+							SELECT
+								*
+							FROM
+								translatorD
+							WHERE
+								translatorD.id IN (
+									SELECT
+										translatorD.id tid
+									FROM
+										translatorD,
+										quotationD
+									WHERE
+										translatorD.id = quotationD.transtionId
+									GROUP BY
+										translatorD.id
+								)'
+								<if test="msg!= null and msg!=''"> +' and b.nickname like ''%${msg}%'' '</if>
+								<if test="namemsg != null and namemsg!=''">+' and  quotationD.languages like ''%${namemsg}%'' '</if>
+								<if test="phonemsg != null and phonemsg!=''">+' and quotationD.domain like ''%${phonemsg}%'' '</if>
+								<if test="msgType==null and msgType==''">
+								<!-- 不选择翻译流程 ，等级 为翻译等级，或校对等级，或审核等级-->
+								<if test="secondmsg!=null and secondmsg!=''">
+									+' and (quotationD.tranlevels='+#{secondmsg}+' or quotationD.proolevels='+#{secondmsg}+' or quotationD.auditlevels='+#{secondmsg}+')'
+								</if>
+								</if>
+								<if test="msgType!=null and msgType!=''">
+									<if test="msgType=='1' or msgType==1">
+										<if test="secondmsg!=null and secondmsg!=''">
+											+' and quotationD.tranlevels='+#{secondmsg}+' '
+										</if>
+										+' and applyStateT=1 '
+									</if>
+									<if test="msgType=='2' or msgType==2">
+										<if test="secondmsg!=null and secondmsg!=''">
+											+' and quotationD.proolevels='+#{secondmsg}+' '
+										</if>
+										+' and applyStateP=1 '
+									</if>
+									<if test="msgType=='3' or msgType==3">
+										<if test="secondmsg!=null and secondmsg!=''">
+											+' and quotationD.auditlevels='+#{secondmsg}+' '
+										</if>
+										+' and applyStateA=1 '
+									</if>
+								</if>
+						+') c
+						ORDER BY c.rank desc
+				)
+				GROUP BY
+				b.id,
+				b.nickname,
+				b.degree,
+				b.rank,
+				b.userUrl
+				<!-- quotationD.majorTotal,
+				quotationD.prooTotal, -->
+				<if test="namemsg != null and namemsg!=''">,VCB.VLANGUAGE,quotationD.languages</if>
+				<if test="namemsg == null or namemsg==''"> ,VCB.VTID,b.language</if>	
+				<if test="(msgType!=null and msgType!='') or (secondmsg!='' and secondmsg!=null)">
+					<if test="msgType=='1' or msgType==1 ">
+							,quotationD.tranlevels
+					</if>
+					<if test="msgType=='2' or msgType==2">
+							,quotationD.proolevels
+												</if>
+					<if test="msgType=='3' or msgType==3">
+							,quotationD.auditlevels
+					</if>
+					<if test="msgType==null or msgType==''">,quotationD.tranlevels</if>
+				</if>
+				ORDER BY b.rank desc '
+		)
+		
+	</select>
+	
+	<select id="getTransLanguagesStr" parameterType="int" resultType="String">
+		select DISTINCT(languages) from quotationD where transtionId = #{id}
+	</select>
+	<!-- sq add-->
+	<select id="getTranstionIdByTel" parameterType="Translator" resultType="int">
+		select id from translatorD where tel = #{tel} and nickname = #{nickname}
+	</select>
+	<select id="getTranstionIdByNickName" parameterType="Translator" resultType="int">
+		select id from translatorD where nickname = #{nickname}
+	</select>
+	<select id="getTranstionIdByNickNameAndEmail" parameterType="Translator" resultType="int">
+		select id from translatorD where nickname = #{nickName} and email = #{email}
+	</select>
+	
+</mapper>

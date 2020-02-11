@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.QuestionAndAnswerDao">
+     
+     <sql id="questionkey">
+		<trim suffixOverrides=",">
+			<if test="type!=null and type!=''">type,</if>
+
+			<if test="question!=null and question!=''">question,</if>
+
+			<if test="answer!=null and nameShort!=''">answer,</if>
+
+		</trim>
+	</sql>
+	
+	
+	<sql id="questionValue">
+		<trim suffixOverrides=",">
+			<if test="type!=null and type!=''">#{type},</if>
+
+			<if test="question!=null and question!=''">#{question},</if>
+
+			<if test="answer!=null and answer!=''">#{answer},</if>
+
+		</trim>
+	</sql>
+	
+    <select id="queryByAll" parameterType="com.web.util.Page" resultType="QuestionAndAnswer" >
+      EXEC (
+	'select TOP ' +#{ pageSize }+ ' * from questionAndAnswerD  WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM questionAndAnswerD  where type like ''${msg}'' and answer is not null ) and type like ''${msg}'' and answer is not null '
+)
+    </select>
+      
+     <!-- 根据类型查看问题 -->
+    <select id="findByType" parameterType="string" resultType="QuestionAndAnswer">
+     select id,question from questionAndAnswerD where type=#{type} and answer is not null
+    </select> 
+    
+   <!--  根据类型查询记录数 -->
+    <select id="getTotalCount" parameterType="com.web.util.Page" resultType="long">
+		select count(*) from questionAndAnswerD where type like #{msg } and answer is not null
+	</select>
+	
+	<!--  根据问题查询记录数 -->
+    <select id="getTotalCountQuestion" parameterType="com.web.util.Page" resultType="long">
+		select count(*) from questionAndAnswerD where question like #{msg } and answer is not null
+	</select>
+	
+	<!-- 根据问题查询对应答案 -->
+	<select id="queryByQuestion" parameterType="com.web.util.Page" resultType="QuestionAndAnswer">
+	  EXEC (
+	'select TOP ' +#{ pageSize }+ ' * from questionAndAnswerD  WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM questionAndAnswerD  where question like ''${msg}'' and answer is not null ) and question like ''${msg}'' and answer is not null '
+)
+	</select>
+	
+	<!--  根据特定问题查询特定答案 -->
+    <select id="findAnswer" parameterType="String" resultType="String">
+		select answer from questionAndAnswerD where question like #{msg} 
+	</select> 
+	
+	<!-- 查询问题与回答 -->
+    <select id="findByQuestionAndAnswer" resultType="QuestionAndAnswer">
+     select question,answer from questionAndAnswerD
+    </select>
+    
+    <insert id="addQuestion" parameterType="QuestionAndAnswer">
+     insert into questionAndAnswerD
+     (
+	 <include refid="questionkey" />
+	 )
+	  values
+	 (
+	 <include refid="questionValue" />
+	 )
+    </insert>
+</mapper>

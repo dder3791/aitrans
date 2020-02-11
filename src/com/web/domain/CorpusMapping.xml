@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.CorpusDao">
+	<!-- 根据分页类查询分页的术语信息 -->
+	<select id="getCorpuss" parameterType="com.web.util.Page" resultType="Corpus">
+		<!-- 判断术语领域是否为空 -->
+		<if test="dateType==0">
+		EXEC ('select top '+#{pageSize}+'  * from corpusTableD where id not in(select top '+#{startIndex}+' id from corpusTableD where  CorpusId  in (select id from corpusTablelistD where languagePair = ''${msgType}'') and CorpusOrigin like ''${msg}''  )  and CorpusId  in (select id from corpusTablelistD where languagePair =''${msgType}'' ) and CorpusOrigin like ''${msg}''')
+		</if>
+		<if test="dateType!=0">
+		EXEC ('select top '+#{pageSize}+'  * from corpusTableD where id not in(select top '+#{startIndex}+' id from corpusTableD where  CorpusId  in (select id from corpusTablelistD where languagePair = ''${msgType}''  and domainId = '+#{dateType}+' ) and CorpusOrigin like ''${msg}'' )  and CorpusId  in (select id from corpusTablelistD where languagePair =''${msgType}'' and domainId ='+#{dateType}+') and CorpusOrigin like ''${msg}''')
+		</if>
+	</select>
+	<!-- 根据分页类查询总纪录数 -->
+	<select id="getTotalCount" parameterType="com.web.util.Page" resultType="long">
+	<!-- 判断领域是否为空 -->
+	<if test="dateType==0">
+		select count(*)from corpusTableD where CorpusId  in (select id from corpusTablelistD where languagePair = #{msgType}) and  CorpusOrigin like #{msg}
+	</if>
+	<if test="dateType!=0">
+		select count(*)from corpusTableD where CorpusId  in (select id from corpusTablelistD where languagePair = #{msgType} and domainId= #{dateType} ) and  CorpusOrigin like #{msg}
+	</if>
+	</select>
+	
+	<!-- 根据id查询语料信息 -->
+	<select  id="queryById" parameterType="int" resultType="Corpus">
+		select * from corpusTableD where id = #{id }
+	</select>
+ 
+</mapper>

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.OrderDao">
+      
+      <sql id="key">
+		<trim suffixOverrides=",">
+			<if test="orderNumber!=null and orderNumber!=''">orderNumber,</if>
+
+			<if test="generatedTime!=null and generatedTime!=''">generatedTime,</if>
+			
+			<if test="transTime!=null and transTime!=''">transTime,</if>
+
+			<if test="prooTime!=null and prooTime!=''">prooTime,</if>
+			
+			<if test="expertTime!=null and expertTime!=''">expertTime,</if>
+			
+			<if test="examinationTime!=null and examinationTime!=''">examinationTime,</if>
+			
+			<if test="signTime!=null and signTime!=''">signTime,</if>
+			
+			<if test="customerEvaluate!=null and customerEvaluate!=''">customerEvaluate,</if>
+			
+			<if test="payState!=null and payState!=''">payState,</if>
+			
+			<if test="completeTime!=null and completeTime!=''">completeTime,</if>
+			
+			<if test="evaluateId!=null and evaluateId!=''">evaluateId,</if>
+			
+			<if test="rejection!=null and rejection!=''">rejection,</if>
+			
+			
+			<if test="translatorid!=null and translatorid!=''">translatorid,</if>
+
+			<if test="payNumber!=null and payNumber!=''">payNumber,</if>
+			
+			<if test="taskStateId!=null and taskStateId!=''">taskStateId,</if>
+			
+			<if test="orderReference!=null and orderReference!=''">orderReference,</if>
+			
+			<if test="orderTitle!=null and orderTitle!=''">orderTitle,</if>
+			
+			<if test="clientUserId!=null and clientUserId!=''">clientUserId,</if>
+			
+			<if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">clientCustomerNeedId,</if>
+		
+		    <if test="transUrl!=null and transUrl!=''">transUrl,</if>
+            
+            <if test="prooUrl!=null and prooUrl!=''">prooUrl,</if>
+            
+            <if test="auditUrl!=null and auditUrl!=''">auditUrl,</if>
+		</trim>
+	</sql>
+      <sql id="value">
+		<trim suffixOverrides=",">
+			<if test="orderNumber!=null and orderNumber!=''">#{orderNumber},</if>
+
+			<if test="generatedTime!=null and generatedTime!=''">#{generatedTime},</if>
+			
+			<if test="transTime!=null and transTime!=''">#{transTime},</if>
+
+			<if test="prooTime!=null and prooTime!=''">#{prooTime},</if>
+			
+			<if test="expertTime!=null and expertTime!=''">#{expertTime},</if>
+			
+			<if test="examinationTime!=null and examinationTime!=''">#{examinationTime},</if>
+			
+			<if test="signTime!=null and signTime!=''">#{signTime},</if>
+			
+			<if test="customerEvaluate!=null and customerEvaluate!=''">#{customerEvaluate},</if>
+			
+			<if test="payState!=null and payState!=''">#{payState},</if>
+			
+			<if test="completeTime!=null and completeTime!=''">#{completeTime},</if>
+			
+			<if test="evaluateId!=null and evaluateId!=''">#{evaluateId},</if>
+			
+			<if test="rejection!=null and rejection!=''">#{rejection},</if>
+			
+			
+			<if test="translatorid!=null and translatorid!=''">#{translatorid},</if>
+
+			<if test="payNumber!=null and payNumber!=''">#{payNumber},</if>
+			
+			<if test="taskStateId!=null and taskStateId!=''">#{taskStateId},</if>
+			
+			<if test="orderReference!=null and orderReference!=''">#{orderReference},</if>
+			
+			<if test="orderTitle!=null and orderTitle!=''">#{orderTitle},</if>
+			
+			<if test="clientUserId!=null and clientUserId!=''">#{clientUserId},</if>
+			
+			<if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">#{clientCustomerNeedId},</if>
+		
+		    <if test="transUrl!=null and transUrl!=''">#{transUrl},</if>
+            
+            <if test="prooUrl!=null and prooUrl!=''">#{prooUrl},</if>
+            
+            <if test="auditUrl!=null and auditUrl!=''">#{auditUrl},</if>
+		
+		
+		</trim>
+	</sql>
+      
+      
+     <!--  添入译员信息 -->
+	 <insert id="addOrder" parameterType="Order">
+		insert into
+		OrderD
+		(
+		<include refid="key" />
+		)
+		values
+		(
+		<include refid="value" />
+		)
+	</insert>
+	<!--  <insert id="addOrder" parameterType="Order">
+	   insert into OrderD (orderNumber,generatedTime,translatorid,payNumber,taskStateId,orderReference,orderTitle,clientUserId,clientCustomerNeedId) 
+	   values(#{orderNumber}, #{generatedTime},#{translatorid},#{payNumber},#{taskStateId},#{orderReference},#{orderTitle},#{clientUserId},#{clientCustomerNeedId});
+	 </insert> -->
+	 
+	 <sql id="updateorder">
+		<trim suffixOverrides=",">
+            <if test="orderNumber!=null and orderNumber!=''">orderNumber=#{orderNumber},</if>
+
+			<if test="generatedTime!=null and generatedTime!=''">generatedTime=#{generatedTime},</if>
+
+			<if test="translatorid!=null and translatorid!=''">translatorid=#{translatorid},</if>
+
+			<if test="payNumber!=null and payNumber!=''">payNumber=#{payNumber},</if>
+			
+			<if test="taskStateId!=null and taskStateId!=''">taskStateId=#{taskStateId},</if>
+			
+			<if test="orderReference!=null and orderReference!=''">orderReference=#{orderReference},</if>
+			
+			<if test="orderTitle!=null and orderTitle!=''">orderTitle=#{orderTitle},</if>
+			
+			<if test="clientUserId!=null and clientUserId!=''">clientUserId=#{clientUserId},</if>
+			
+			<if test="clientCustomerNeedId!=null and clientCustomerNeedId!=''">clientCustomerNeedId=#{clientCustomerNeedId},</if>
+		
+		    <if test="transUrl!=null and transUrl!=''">transUrl=#{transUrl},</if>
+            
+            <if test="prooUrl!=null and prooUrl!=''">prooUrl=#{prooUrl},</if>
+            
+            <if test="auditUrl!=null and auditUrl!=''">auditUrl=#{auditUrl},</if>
+ 
+		</trim>
+	</sql>
+	 
+	 <!-- 修改订单信息 -->
+	<update id="editOrderId" parameterType="int">
+		update OrderD set <include refid="updateorder"/>  where id='${id}'
+	</update> 
+	 
+	 
+	 <select id="queryByTransOrder" parameterType="com.web.util.Page"
+		resultType="Order">
+		EXEC (
+		'select TOP ' + #{ pageSize }+ ' * from orderD
+		WHERE translatorid='+#{msgId}+' and ID NOT IN(SELECT TOP '
+		+#{startIndex}+ ' ID FROM orderD where 1=1 and
+		translatorid='+#{msgId} 
+
+		 <if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> + 'and taskStateId=''8'''</when>
+				<otherwise>+ 'and taskStateId!=''8'''</otherwise>
+			</choose>
+		</if>
+		<!--<if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like ''%${thirdmsg}%'') '</if> -->
+			+ ' order by generatedTime  desc  '
+		+')'
+		<if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> + 'and taskStateId=''8'''</when>
+				<otherwise>+ 'and taskStateId!=''8'''</otherwise>
+			</choose>
+		</if>
+		<!-- <if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like ''%${thirdmsg}%'' ) '</if> -->
+		 +'order by generatedTime desc ' )
+	</select>
+	 
+	 
+	 
+	 
+     <select id="queryByAllOrder"   parameterType="com.web.util.Page"    resultType="Order">
+     <if test="dateType==0">
+     EXEC (
+	'select TOP  ' +#{ pageSize }+ '  * from  OrderD  WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM OrderD where  translatorid =''${msgId}'')   
+	and translatorid =''${msgId}'' '
+)
+</if>
+ <if test="dateType==1">
+EXEC (
+	'select TOP ' +#{ pageSize }+ ' * from OrderD WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM OrderD  where taskStateId=''8'' and translatorid =''${msgId}'') and taskStateId=''8'' and translatorid =''${msgId}'' '
+)
+</if>
+<if test="dateType==2">
+EXEC (
+	'select TOP ' +#{ pageSize }+ ' * from OrderD WHERE ID NOT IN(SELECT TOP ' +#{startIndex}+ ' ID FROM OrderD  where taskStateId!=''8'' and translatorid =''${msgId}'') and taskStateId!=''8''  and translatorid =''${msgId}'' '
+		)
+</if>
+<if test="dateType==3"> 
+ EXEC (
+		'select TOP ' + #{ pageSize }+ ' * from orderD
+		WHERE translatorid='+#{msgType}+' and ID NOT IN(SELECT TOP '
+		+#{startIndex}+ ' ID FROM orderD where 1=1 and
+		translatorid='+#{msgType}
+		<if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+       +')'
+       <if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+        )
+ </if>
+     </select>
+     
+     <select id="queryByOrderId" parameterType="int" resultType="Order">
+     select *from OrderD where id=#{id}
+     </select>
+      
+ 	<select id="getTransOrderCount" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(*) from orderD where 1=1
+		<if test="msgType!=null and msgType!=''">and translatorid=#{msgType}</if>
+		<if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'"> and generatedTime > DateAdd(Month,-3,getdate())</when>
+		 		<when test="secondmsg=='1m'"> and generatedTime > DateAdd(Month,-1,getdate())</when>
+		 		<when test="secondmsg=='1w'"> and generatedTime > DateAdd(day,-7,getdate())</when>
+		 	</choose>
+		 </if>
+		 <if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> and taskStateId=8</when>
+				<otherwise> and taskStateId!=8</otherwise>
+			</choose>
+		</if>
+	</select>
+      
+     <!-- 查询完成订单数 -->
+     <select id="queryCompstate" parameterType="int" resultType="long">
+      select count(*) from OrderD where taskStateId='8' and translatorid=#{id}
+     </select>
+     <!-- 查询未完成订单数 -->
+     <select id="queryUnfinished" parameterType="int" resultType="long">
+      select count(*) from OrderD where taskStateId!='8' and translatorid=#{id}
+     </select>
+     <!-- 查询当前译员下订单数 -->
+     <select id="queryOrderCount" parameterType="int" resultType="long">
+      select count(*) from OrderD where  translatorid=#{id}
+     </select>
+     <!-- 查询当前译员订单信息 -->
+     <select id="queryTransOrder" parameterType="int" resultType="Order">
+      select * from OrderD where taskStateId='8' and translatorid=#{id} 
+     </select>
+      <!-- 根据id查询当前译员 -->
+      <select id="queryOrderTrans" parameterType="int" resultType="int">
+      select translatorid from OrderD where  id=#{id} 
+     </select>
+     
+ 	<!-- 根据客户id，查询符合条件的订单总记录数 -->
+ 	<select id="countCusOrderByCusId" parameterType="com.web.util.Page"
+		resultType="long">
+		select count(*) from orderD where 1=1
+		<if test="msgType!=null and msgType!=''">and clientUserId=#{msgType}</if>
+		<if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'"> and generatedTime > DateAdd(Month,-3,getdate())</when>
+		 		<when test="secondmsg=='1m'"> and generatedTime > DateAdd(Month,-1,getdate())</when>
+		 		<when test="secondmsg=='1w'"> and generatedTime > DateAdd(day,-7,getdate())</when>
+		 	</choose>
+		 </if>
+		 <if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> and taskStateId=8</when>
+				<otherwise> and taskStateId!=8</otherwise>
+			</choose>
+		</if>
+	</select>
+
+
+
+
+	<!-- 根据客户id，分页展示客户订单 -->
+	<select id="findCusOrderByCusId" parameterType="com.web.util.Page"
+		resultType="Order">
+		EXEC (
+		'select TOP ' + #{ pageSize }+ ' * from orderD
+		WHERE clientUserId='+#{msgType}+' and ID NOT IN(SELECT TOP '
+		+#{startIndex}+ ' ID FROM orderD where 1=1 and
+		clientUserId='+#{msgType}
+
+		 <if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> + 'and taskStateId=''8'''</when>
+				<otherwise>+ 'and taskStateId!=''8'''</otherwise>
+			</choose>
+		</if>
+		<!--<if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like ''%${thirdmsg}%'') '</if> -->
+		+' order by generatedTime desc '
+		+')'
+		<if test="secondmsg!=null and secondmsg!=''">
+		 	<choose>
+		 		<when test="secondmsg=='3m'">+ ' and generatedTime > DateAdd(Month,-3,getdate())'</when>
+		 		<when test="secondmsg=='1m'">+ ' and generatedTime > DateAdd(Month,-1,getdate())'</when>
+		 		<when test="secondmsg=='1w'">+ ' and generatedTime > DateAdd(day,-7,getdate())'</when>
+		 	</choose>
+		 </if>
+		<if test="namemsg!=null and namemsg!=''">
+			<choose>
+				<when test="namemsg=='已完成'"> + 'and taskStateId=''8'''</when>
+				<otherwise>+ 'and taskStateId!=''8'''</otherwise>
+			</choose>
+		</if>
+		<!-- <if test="thirdmsg!=null and thirdmsg!=''">+' and (title like ''%${thirdmsg}%'' or languagePair like
+			''%${thirdmsg}%'' or domainId in (select id from fieldD where field
+			like ''%${thirdmsg}%'') or procedureTypeId in (select id from
+			procedureTypeD where procedureType like ''%${thirdmsg}%'') or
+			description like ''%${thirdmsg}%'' or cycle like ''%${thirdmsg}%'' or
+			acceptState like ''%${thirdmsg}%'' or publishModel like ''%${thirdmsg}%'' ) '</if> -->
+		+' order by generatedTime desc '
+		)
+	</select>
+	
+	
+	
+	 <update id="updateTaskstateId" parameterType="Order">
+	    update OrderD set taskStateId=#{taskStateId}
+        <if test="transTime!=null and transTime!=''">
+         ,transTime=#{transTime}
+        </if>	 
+        <if test=" prooTime!=null and  prooTime!=''">
+         , prooTime=#{prooTime}
+        </if>
+        <if test="expertTime!=null and expertTime!=''">
+         ,expertTime=#{expertTime}
+        </if>
+        <if test="examinationTime!=null and examinationTime!=''">
+         ,examinationTime=#{examinationTime}
+        </if>
+        <if test="payState!=null and payState!=''">
+         ,payState=#{payState}
+        </if>
+        <if test="signTime!=null and signTime!=''">
+         ,signTime=#{signTime}
+        </if>
+        <if test="customerEvaluate!=null and customerEvaluate!=''">
+         ,customerEvaluate=#{customerEvaluate}
+        </if>
+        <if test="completeTime!=null and completeTime!=''">
+         ,completeTime=#{completeTime}
+        </if>
+        <if test="payNumber!=null and  payNumber!=''">
+        ,payNumber=#{payNumber}
+        </if>
+        <if test="rejected!=null and  rejected!=''">
+        ,rejection=#{rejected}
+        </if>
+	    where id=#{id} 
+	 </update>
+	 
+	 <select id="findOrder" parameterType="Order" resultType="Order">
+	 	select * from orderD where 1=1
+	 	<if test="clientUserId!=null and clientUserId!=''"> and clientUserId=#{clientUserId}</if>
+        <if test="completeTime!=null and completeTime!=''"> and completeTime>DateAdd(Month,-3,getdate())</if>
+	 </select>
+	 
+	 <select id="findOrderId" parameterType="int" resultType="Order">
+	 	select * from orderD where id=#{id}
+	 </select>
+    <select id="getSignTime" parameterType="string" resultType="int">
+    	select getSignTime from orderD where id=#{orderId}
+    </select>
+    <select id="getEvaluateId" parameterType="int" resultType="Order">
+	 	select evaluateId from orderD where id=#{id}
+	 </select>
+    <update id="setEvaluateId" parameterType="Order">
+    	update OrderD set evaluateId =#{evaluateId} 
+    	<if test="customerEvaluate!=null and customerEvaluate!=''">
+    		,customerEvaluate=#{customerEvaluate}
+    	</if>
+    	<if test="completeTime !=null and completeTime !=''">
+    		,completeTime=#{completeTime}
+    	</if>
+    	where  id = #{id}
+    </update>
+    
+    
+    <!-- 根据id查询符合状态要求的订单支付金额 -->
+	<select id="sumPayNumber" parameterType="Order" resultType="string">
+		select SUM(payNumber) from orderD where clientUserId=#{clientUserId} and #{taskStateId}>taskStateId
+	</select>
+	
+</mapper>

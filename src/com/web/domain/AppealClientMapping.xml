@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.AppealClientDao">
+     
+     <sql id="key">
+		<trim suffixOverrides=",">
+			<if test="translatorId!=null and translatorId!=''">translatorId,</if>
+
+			<if test="orderId!=null and orderId!=''">orderId,</if>
+
+			<if test="cause!=null and cause!=''">cause,</if>
+
+			<if test="appealDate!=null and appealDate!=''">appealDate,</if>
+
+			<if test="appealstate!=null and appealstate!=''">appealstate,</if>
+
+		</trim>
+	</sql>
+     
+    <sql id="value">
+		<trim suffixOverrides=",">
+			<if test="translatorId!=null and translatorId!=''">#{translatorId},</if>
+
+			<if test="orderId!=null and orderId!=''">#{orderId},</if>
+
+			<if test="cause!=null and cause!=''">#{cause},</if>
+
+			<if test="appealDate!=null and appealDate!=''">#{appealDate},</if>
+			
+			<if test="appealstate!=null and appealstate!=''">#{appealstate},</if>
+
+		</trim>
+	</sql>
+    
+    <insert id="addTransAppeal" parameterType="AppealClient">
+		insert into
+		appealClientD
+		(
+		<include refid="key" />
+		)
+		values
+		(
+		<include refid="value" />
+		)
+	</insert>
+   
+	<update id="updateAppeal" parameterType="AppealClient">
+		update appealClientD  
+		<trim prefix="set" suffixOverrides=",">
+		 <if test="translatorId!=null and translatorId!=''">translatorId=#{translatorId},</if>
+		 <if test="orderId!=null and orderId!=''">orderId=#{orderId},</if>
+		 <if test="cause!=null and cause!=''">cause=#{cause},</if>
+		 <if test="appealDate!=null and appealDate!=''">appealDate=#{appealDate},</if>
+		 <if test="appealstate!=null and appealstate!=''">appealstate=#{appealstate},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	
+	
+</mapper>

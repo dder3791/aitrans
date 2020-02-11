@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.EvaluateDao">
+	<!-- 向前台评价表添加评价信息的术语信息 -->
+	
+	<insert id="addEvaluate" parameterType="EvaluateClient">
+		  insert into evaluateClientD (understandLevel,degreeOfSmooth,rigor,integrality,completionSpeed,format,score,evaluateDetails,orderId,technicalDifficulties,languageDifficulties,patentCorpus,technicalCorpus,missingParagraph,missingSentence,missingWord,syntaxError,otherError,state) 
+	   values(${understandLevel}, ${degreeOfSmooth},${rigor},${integrality},'${completionSpeed}',${format},${score},'${evaluateDetails}',${orderId},'${technicalDifficulties}','${languageDifficulties}',${patentCorpus},${technicalCorpus},${missingParagraph},${missingSentence},${missingWord},${syntaxError},'${otherError}',${state});
+	</insert>
+
+    <!-- 修改评价状态 -->
+    <update id="updateEvaluateState" parameterType="EvaluateClient">
+     update evaluateClientD set state=#{state} where id=#{id}
+    </update>
+    
+    <!-- 根据id查询评价量 -->
+	<select id="queryEvaluateCount" parameterType="EvaluateClient" resultType="long">
+	   SELECT
+	COUNT(*)
+FROM
+	orderD,
+  evaluateClientD,
+  translatorD,
+clientCustomerNeedD
+WHERE
+	evaluateClientD.orderId=orderD.id
+  and orderD.translatorid=translatorD.id
+  and orderD.clientCustomerNeedId=clientCustomerNeedD.id
+  and  orderD.translatorid=#{id}
+	</select>
+ 
+    <!-- 根据id查询评价量 -->
+	<select id="queryByAllEvaluate" parameterType="com.web.util.Page"  resultType="EvaluateClient">
+EXEC (
+	'select TOP  ' +#{ pageSize }+ '  * from  
+	evaluateClientD,orderD,translatorD  
+	where 1=1 and evaluateClientD.orderId=orderD.id and
+	 orderD.translatorid=translatorD.id  and 
+	 orderD.translatorid like ''%${msgId}%'' and  
+	 evaluateClientD.ID NOT IN
+	(SELECT TOP ' +#{startIndex}+ ' ID FROM evaluateClientD  ) and 
+	evaluateClientD.orderId=orderD.id and 
+	orderD.translatorid=translatorD.id and orderD.translatorid  like ''%${msgId}%''
+	'
+) 
+	</select>
+ 
+   <!-- 根据id查询评价信息 -->
+   <select id="queryByEvaluateId" parameterType="int" resultType="EvaluateClient">
+     select * from evaluateClientD where id=#{id}
+   </select>
+   <!-- 根据订单id查询评价信息 -->
+   <select id="queryByEvaluteOrder" parameterType="int" resultType="EvaluateClient">
+     select * from evaluateClientD where orderId=#{id}
+   </select>
+   
+     <!-- 根据订单id查询评价id -->
+   <select id="queryById" parameterType="int" resultType="int">
+     select id from evaluateClientD where orderId=#{id}
+   </select>
+   
+   <!--查询译员下的评价信息 -->
+   <select id="queryTransEvaluates" parameterType="int" resultType="EvaluateClient">
+	SELECT
+	*
+FROM
+	evaluateClientD,
+	orderD,
+	clientUserD,
+	translatorD
+where evaluateClientD.orderId=orderD.id 
+    and clientUserD.id=orderD.clientUserId
+    and orderD.translatorid=translatorD.id 
+    and orderD.translatorid=#{id}
+	</select>
+   
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ArticleDao">
+	<!-- 根据分页类进行模糊查询带分页 -->
+	<select id="queryByAll" parameterType="com.web.util.Page" resultType="Article">
+		<!-- 判断查询资讯类型 -->
+		<if test="dateType==1">
+		Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD where type like ''${msg}'' ORDER BY issueDate DESC  )and type like ''${msg}'' ORDER BY issueDate DESC') 
+		</if>
+		<if test="dateType==0">
+		Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD ORDER BY issueDate DESC  ) ORDER BY issueDate DESC') 
+		</if>
+		<if test="dateType==2">
+		Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD where hot = 1 and elite = 1 and  type like ''${msg}'' ORDER BY issueDate DESC  )and  type like ''${msg}'' and hot = 1 and elite = 1 ORDER BY issueDate DESC') 
+		</if>
+	</select>
+	<!-- 	查询公告资讯信息 
+	<select id="queryByActivity">
+	Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD where type like ''公告资讯'' ORDER BY issueDate DESC  )and type like ''公告资讯'' ORDER BY issueDate DESC') 
+	</select>
+	查询活动资讯信息
+	<select id="queryByActivity">
+	Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD where type like ''公告资讯'' ORDER BY issueDate DESC  )and type like ''公告资讯'' ORDER BY issueDate DESC') 
+	</select>
+	查询平台资讯
+	<select id="queryByActivity">
+	Exec('select TOP '+#{pageSize}+' * from articleD  WHERE ID NOT IN(SELECT TOP '+#{startIndex}+' ID FROM articleD where type like ''公告资讯'' ORDER BY issueDate DESC  )and type like ''公告资讯'' ORDER BY issueDate DESC') 
+	</select> -->
+	<!-- 根据资讯类型查询所有资讯信息 -->
+	<select id="queryByType" parameterType="string" resultType="Article">
+		select * from articleD where type = #{type }
+	</select>
+	<!-- 根据分页类查询总记录数 -->
+	<select id="getTotalCount" parameterType="com.web.util.Page" resultType="long">
+		<!-- 判断资讯类型 -->
+		<if test="dateType==1">
+		select count(*) from articleD where type like #{msg } 
+		</if>
+		<if test="dateType==0">
+		select count(*) from articleD
+		</if>
+		<if test="dateType==2">
+		select count(*) from articleD where hot = 1 and elite = 1 and type like #{msg } 
+		</if>
+	</select>
+	<!-- 查询资讯详情 -->
+	<select id="queryById" parameterType="int" resultType="Article">
+		select * from articleD where id = #{id}
+	</select>
+ 	<!-- 查询首页所需的公告资讯信息 -->
+ 	<select id="getNoticeArticle" resultType="Article">
+ 		select top 2 * from articleD where type = '公告资讯' ORDER BY issueDate DESC
+ 	</select>
+ 	
+ 	<!-- 查询首页所需的平台资讯信息 -->
+ 	<select id="getPlatformArticle" resultType="Article">
+ 		select top 2 * from articleD where type = '平台资讯' ORDER BY issueDate DESC
+ 	</select>
+ 	
+ 	<!-- 查询首页所需的活动资讯信息 -->
+ 	<select id="getActivityArticle" resultType="Article">
+ 		select top 2 * from articleD where type = '活动资讯' ORDER BY issueDate DESC
+ 	</select>
+ 	
+ 	
+</mapper>

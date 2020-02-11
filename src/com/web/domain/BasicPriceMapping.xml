@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.BasicPriceDao">
+	<!-- 查询所有的基础语言价格信息 -->
+	<select id="queryByAll"  resultType="BasicPrice">
+		select * from basicPriceD
+	</select>
+	<!-- 根据语言类型查询对应价格信息 -->
+	<select id="queryByLanguage"  parameterType="string" resultType="BasicPrice">
+		select * from basicPriceD where type = #{language}
+	</select>
+	<!-- 根据id查询对应的语言类 -->
+	<select id="queryById"  parameterType="int" resultType="BasicPrice">
+		select * from basicPriceD where id = #{id}
+	</select>
+ 
+</mapper>

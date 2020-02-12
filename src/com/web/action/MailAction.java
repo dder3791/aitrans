@@ -28,7 +28,7 @@ public class MailAction {
 	public Map<String,Object> createOrder(){
 		log.debug("访问WEB层-测试邮件生成订单-开始");
 		Map<String , Object> rs = new HashMap<>();		
-		rs.put("msg", mailService.createOrder());	
+		rs.put("msg", mailService.createOrder());
 		log.debug("访问WEB层-测试邮件生成订单-结束");
 		return rs;
 	}

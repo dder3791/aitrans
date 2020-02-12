@@ -1192,7 +1192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select id from translatorD where nickname = #{nickname}
 	</select>
 	<select id="getTranstionIdByNickNameAndEmail" parameterType="Translator" resultType="int">
-		select id from translatorD where nickname = #{nickName} and email = #{email}
+		select id from translatorD where nickname = #{nickname} and email = #{email}
 	</select>
 	
 </mapper>

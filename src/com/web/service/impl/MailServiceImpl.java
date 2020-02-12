@@ -79,7 +79,7 @@ public class MailServiceImpl implements MailService{
 	        	String completeTime = titles[9];//交稿日期
 	        	String needName = titles[10];//项目名称
 	        	List<String> receiveAddress = (List<String>)mail.get("receiveAddress");//收件人列表 
-	        	if(titles.length<12){
+	        	if(titles.length<11){
 	        		errors.append(i+"_数据不完整，请检查邮件标题格式是否正确");
 	        		continue;	   
 	        	}
@@ -134,7 +134,8 @@ public class MailServiceImpl implements MailService{
 	        	clientCustomerNeed.setAcceptState("发布中");
 	        	ClientUserD clientUser = clientUserDao.queryByName(clientNumber);
 	        	if(clientUser==null){
-	        		return "客户不存在，请检查客户号是否正确";
+	        		errors.append("客户不存在，请检查客户号是否正确");
+	        		continue;
 	        	}
 	        	clientCustomerNeed.setClientUserId(clientUser.getId());
 	        	clientCustomerNeed.setPublishModel("邮件选定译员模式");    	
@@ -148,23 +149,20 @@ public class MailServiceImpl implements MailService{
 	        	int translatorId = -1;
 	        	translator.setNickname(nickname);//译员姓名
 	        	if(receiveAddress.size()<2){
-	        		translatorId = translatorDao.getTranstionIdByNickName(translator);
+	        		//translatorId = translatorDao.getTranstionIdByNickName(translator);
+	        		errors.append("没有发送邮件给译员，无法生成订单");
+	        		continue;
 	        	}
 	        	//translator.setTel(tel);//译员电话
-	        	String email = "";
+	        	
 	        	for(String trans:receiveAddress){
 	        		if(trans.equals("shangqiang@aitrans.org")){
 	        			continue;
 	        		}
-	        		email=trans;
+	        		translator.setEmail(trans);
 	        	}
-	        	
-	        	if(StringUtils.isEmpty(email)){
-	        		translatorId = translatorDao.getTranstionIdByNickName(translator);
-	        	}else{
-	        		translatorId = translatorDao.getTranstionIdByNickNameAndEmail(translator);
-	        	}
-	        	
+	        	//根据email和姓名查找译员
+	        	translatorId = translatorDao.getTranstionIdByNickNameAndEmail(translator);  	
 	        	//生成关系表数据
 	        	log.debug("服务层-创建订单-生成关系表数据-译员ID客户ID..->"+i);
 	        	ClientCustomerNeedTrans clientCustomerNeedTrans = new ClientCustomerNeedTrans();
@@ -190,10 +188,11 @@ public class MailServiceImpl implements MailService{
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.debug("服务层-创建订单结束-失败-发生异常");
-			return "订单已生成失败";
+			return "订单生成失败";
 		}
     	log.debug("服务层-创建订单结束-成功返回..");
-    	return StringUtils.isEmpty(errors)?errors.toString():"订单已生成";
+    	
+    	return errors.length()>0?errors.toString():"订单已生成";
     }
     
 }

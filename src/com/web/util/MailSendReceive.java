@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
 
@@ -52,8 +54,9 @@ public class MailSendReceive {
 　　　  * 比如使用好未来企业邮箱 就需要换成 好未来邮箱的 pop服务器地址 pop.263.net  和   端口 110  
     　　 */ 
     		String prot = "110"; // 端口号
-    		//String servicePath = "pop3.163.com";   // 服务器地址
-    		String servicePath = "pop3.mxhichina.com";   // 服务器地址
+    		//String servicePath = "pop3.163.com";   // 163服务器地址
+    		//String servicePath = "pop3.mxhichina.com";   // 阿里云邮件服务器地址
+    		String servicePath = "pop3.126.com";   // 126邮件服务器地址
     		
 
 
@@ -68,7 +71,8 @@ public class MailSendReceive {
        
         Store store = session.getStore("pop3");  
         
-        store.connect("shangqiang@aitrans.org", " Aitrans608a"); //如果用163邮箱程序登录属于第三方登录所以这里的密码是163给的授权密码而并非普通的登录密码
+        //store.connect("shangqiang@aitrans.org", " Aitrans608a"); //如果用163邮箱程序登录属于第三方登录所以这里的密码是163给的授权密码而并非普通的登录密码
+        store.connect("aitrans8@126.com", "aitrans608");//126邮箱
 
         
           
@@ -91,14 +95,15 @@ public class MailSendReceive {
           
         // 得到收件箱中的所有邮件,并解析  
         Message[] messages = folder.getMessages();  
-       
+        log.debug("messages:: " + messages);        
         List<Map<String,Object>> rs = parseMessageToList(messages);  
         
-        for(Map<String,Object> m:rs){
-        	log.debug("收邮件信息：");
+        
+        /*for(Map<String,Object> m:rs){
+        	log.debug("读到的邮件列表：");
         	log.debug(m);
-        }
-         
+        }*/
+        log.debug("所有的邮件都处理完成。");
         //得到收件箱中的所有邮件并且删除邮件
         //deleteMessage(messages);  
         
@@ -108,7 +113,50 @@ public class MailSendReceive {
         
         return rs;
     }  
-      
+    public static void parseMessage0(Message ...messages) throws MessagingException, IOException {
+    	if (messages == null || messages.length < 1){
+    		throw new MessagingException("未找到要解析的邮件!");  
+    	}
+    	// 解析所有邮件  
+    	int len = messages.length;
+    	//len = 1;//test
+        for (int i = 0, count = len;  i < count; i++) {        	
+        	try {
+        		MimeMessage msg = (MimeMessage) messages[i]; 
+            	String send_date = getSentDate(msg, "yyyy-MM-dd HH:mm:ss"); 
+				Date send_date_d = DateUtils.parseDate(send_date,new String[]{"yyyy-MM-dd HH:mm:ss"});
+				Long send_times = send_date_d.getTime();
+				Long now_times = new Date().getTime();
+				if((send_times>(now_times-86400000))){
+					//log.debug("发件人: " + getFrom(msg));  
+					//log.debug("收件人：" + getReceiveAddress(msg, null));  
+					log.debug("主题: " + getSubject(msg));
+					//log.debug("发送时间：" + getSentDate(msg, null)); 
+					//log.debug("format date :"+send_date_d);
+				}				
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+        	
+        	/*System.out.println("主题: " + getSubject(msg));  
+            System.out.println("发件人: " + getFrom(msg));  
+            System.out.println("收件人：" + getReceiveAddress(msg, null));  
+            System.out.println("发送时间：" + getSentDate(msg, null));  
+            System.out.println("是否已读：" + isSeen(msg));  
+            System.out.println("邮件优先级：" + getPriority(msg));  
+            System.out.println("是否需要回执：" + isReplySign(msg));  
+            System.out.println("邮件大小：" + msg.getSize() * 1024 + "kb");  
+            boolean isContainerAttachment = isContainAttachment(msg);  
+            System.out.println("是否包含附件：" + isContainerAttachment); 
+            StringBuffer content = new StringBuffer(300);  
+            getMailTextContent(msg, content);  
+            System.out.println("邮件正文：" + (content.length() > 100 ? content.substring(0,100) + "..." : content));  
+            System.out.println("------------------第" + msg.getMessageNumber() + "封邮件解析结束-------------------- ");  
+            System.out.println();   */
+            
+        }
+    }
     /** 
      * 解析邮件 
      * @param messages 要解析的邮件列表 
@@ -132,7 +180,7 @@ public class MailSendReceive {
             boolean isContainerAttachment = isContainAttachment(msg);  
             System.out.println("是否包含附件：" + isContainerAttachment);  
             if (isContainerAttachment) {  
-                saveAttachment(msg, "d:\\javamail\\"+msg.getSubject() + "_"+i+"_"); //保存附件  
+                //saveAttachment(msg, "d:\\javamail\\"+msg.getSubject() + "_"+i+"_"); //保存附件  
             }   
             StringBuffer content = new StringBuffer(30);  
             getMailTextContent(msg, content);  
@@ -152,30 +200,40 @@ public class MailSendReceive {
         } 
         // 解析所有邮件  
         List<Map<String,Object>> result = new ArrayList<>();
-        for (int i = 0, count = messages.length; i < count; i++) { 
-        	Map <String,Object> mail = new HashMap<>();
-            MimeMessage msg = (MimeMessage) messages[i];  
-            //msg.getAllRecipients().toString();
-            //System.out.println("------------------解析第" + msg.getMessageNumber() + "封邮件-------------------- ");  
-            mail.put("subject", getSubject(msg));//主题            
-            mail.put("from", getFrom(msg));//发件人            
-            mail.put("receiveAddress", getReceiveAdd(msg,null));//收件人列表            
-            mail.put("sendDate", getSentDate(msg, null));//发送时间            
-            mail.put("isSeen", isSeen(msg));//是否已读            
-            mail.put("priority", getPriority(msg));//邮件优先级            
-            mail.put("isReplySign", isReplySign(msg));//是否需要回执           
-            mail.put("size", msg.getSize() * 1024); //邮件大小 kb
-            boolean isContainerAttachment = isContainAttachment(msg); 
-            mail.put("isContainAttachment", isContainerAttachment);//是否包含附件
-            if (isContainerAttachment) {
-            	String url = "d:\\javamail\\"+msg.getSubject() + "_"+i+"_";
-                saveAttachment(msg, url); //保存附件
-                mail.put("attachment", url);//保存附件文件路径
-            }
-            StringBuffer content = new StringBuffer();  
-            getMailTextContent(msg, content);  
-            mail.put("contents", content.toString());//正文            
-            result.add(mail);            
+        for (int i = 0, count = messages.length; i < count; i++) {
+        	try {
+	        	Map <String,Object> mail = new HashMap<>();
+	            MimeMessage msg = (MimeMessage) messages[i];  
+	            //msg.getAllRecipients().toString();
+	            //System.out.println("------------------解析第" + msg.getMessageNumber() + "封邮件-------------------- ");  
+	            String send_date = getSentDate(msg, "yyyy-MM-dd HH:mm:ss"); 
+				Date send_date_d = DateUtils.parseDate(send_date,new String[]{"yyyy-MM-dd HH:mm:ss"});
+				Long send_times = send_date_d.getTime();
+				Long now_times = new Date().getTime();
+				if((send_times>(now_times-86400000))){
+					mail.put("subject", getSubject(msg));//主题            
+		            mail.put("from", getFrom(msg));//发件人            
+		            mail.put("receiveAddress", getReceiveAdd(msg,null));//收件人列表            
+		            mail.put("sendDate", getSentDate(msg, null));//发送时间            
+		            mail.put("isSeen", isSeen(msg));//是否已读            
+		            mail.put("priority", getPriority(msg));//邮件优先级            
+		            mail.put("isReplySign", isReplySign(msg));//是否需要回执           
+		            mail.put("size", msg.getSize() * 1024); //邮件大小 kb
+		            boolean isContainerAttachment = isContainAttachment(msg); 
+		            mail.put("isContainAttachment", isContainerAttachment);//是否包含附件
+		            if (isContainerAttachment) {
+		            	String url = "d:\\javamail\\"+msg.getSubject() + "_"+i+"_";
+		                saveAttachment(msg, url); //保存附件
+		                mail.put("attachment", url);//保存附件文件路径
+		            }
+		            StringBuffer content = new StringBuffer();  
+		            getMailTextContent(msg, content);  
+		            mail.put("contents", content.toString());//正文            
+		            result.add(mail);
+				}	            
+        	}catch (ParseException e) {
+				e.printStackTrace();
+			}
         }        
         return result;
     }

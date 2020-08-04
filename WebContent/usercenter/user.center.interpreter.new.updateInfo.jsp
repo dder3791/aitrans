@@ -213,6 +213,12 @@
             $("#uploadform").ajaxSubmit(options);  
              }
     }
+    function showSoftBox(){
+    	$("#softbox").css("display","block")
+    }
+    function hiddenSoftBox(){
+    	$("#softbox").css("display","none")
+    }
 </script>
 	<style type="text/css">
 		.rowlabel-right {
@@ -243,7 +249,7 @@
 		}
 	</style>
    </head>
-  <body style="background:#f5f5f5;">
+  <body style="background:#f5f5f5;" onload="hiddenSoftBox()">
   <!--      顶部导航      -->
   	<c:if test="${clientid.id!=null || transid.id!=null }">
   	<div class="publickNav">
@@ -375,10 +381,20 @@
 	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件使用：'/></label>
 	               					<label class="col-xs-4 rowlabel-left">
 	               						&nbsp;&nbsp;&nbsp;&nbsp;
-			                          	<input type="radio" name="isToolUse" value="1" <c:if test="${translator.isToolUse ==1 }"> checked="checked"</c:if>><spring:message  code='使用'/>
+			                          	<input id="rai1"  type="radio" name="isToolUse" value="1" <c:if test="${translator.isToolUse ==1 }"> checked="checked"</c:if> onchange="showSoftBox()"><spring:message  code='使用'/>
 			                          	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			                          	<input type="radio" name="isToolUse" value="0" <c:if test="${translator.isToolUse ==0 }">checked="checked"</c:if>><spring:message  code='不使用'/>
+			                          	<input id="rai2"  type="radio" name="isToolUse" value="0" <c:if test="${translator.isToolUse ==0 }">checked="checked"</c:if> onchange="hiddenSoftBox()"><spring:message  code='不使用'/>
 	               					</label>
+	               				</div>
+	               				<div class="row" id="softbox">
+	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件名称：'/></label>
+	               					<div class="col-xs-4">
+	               						<input class='form-control' name="clientSoftName" id="" onchange="" value="${translator.clientSoftName}">	               						
+	               					</div>
+	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件码：'/></label>
+	               					<div class="col-xs-4">
+	               						<input class='form-control' name="clientSoftCode" value="${translator.clientSoftCode}">
+	               					</div>	               					
 	               				</div>
 	               				<div class="row">
 									<div class="col-xs-10"></div>

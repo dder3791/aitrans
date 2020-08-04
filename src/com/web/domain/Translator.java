@@ -92,6 +92,8 @@ public class Translator {
     private Double wantTranPrice;
     private Double wantProoPrice;
     private Double wantAuditPrice;
+    private String clientSoftName;
+    private String clientSoftCode;
 	public Double getWantTranPrice() {
 		return wantTranPrice;
 	}
@@ -629,43 +631,50 @@ public class Translator {
 	public void setCertificationStatus(String certificationStatus) {
 		this.certificationStatus = certificationStatus;
 	}
+	
+	public String getClientSoftName() {
+		return clientSoftName;
+	}
+	public void setClientSoftName(String clientSoftName) {
+		this.clientSoftName = clientSoftName;
+	}
+	public String getClientSoftCode() {
+		return clientSoftCode;
+	}
+	public void setClientSoftCode(String clientSoftCode) {
+		this.clientSoftCode = clientSoftCode;
+	}
+	
 	@Override
 	public String toString() {
-		return "Translator [id=" + id + ", realName=" + realName
-				+ ", nickname=" + nickname + ", gender=" + gender
-				+ ", birthday=" + birthday + ", nameid=" + nameid
-				+ ", userUrl=" + userUrl + ", worksTarget=" + worksTarget
-				+ ", worksOrigin=" + worksOrigin + ", worksUrl=" + worksUrl
-				+ ", workDescribe=" + workDescribe + ", job=" + job
-				+ ", isObey=" + isObey + ", email=" + email + ", tel=" + tel
-				+ ", address=" + address + ", ip=" + ip + ", tranPrice="
-				+ tranPrice + ", prooPrice=" + prooPrice + ", dayTrans="
-				+ dayTrans + ", transtionId=" + transtionId + ", transTotal="
-				+ transTotal + ", prooTotal=" + prooTotal + ", isToolUse="
-				+ isToolUse + ", description=" + description + ", onlineState="
-				+ onlineState + ", accountName=" + accountName + ", password="
-				+ password + ", softType=" + softType + ", point=" + point
-				+ ", domain=" + domain + ", language=" + language
-				+ ", tranExperience=" + tranExperience + ", prooExperience="
-				+ prooExperience + ", cooperativeState=" + cooperativeState
-				+ ", level=" + level + ", major=" + major + ", degree="
-				+ degree + ", majorId=" + majorId + ", credentialsSalt="
-				+ credentialsSalt + ", roleName=" + roleName + ", state="
-				+ state + ", evaluateid=" + evaluateid + ", accountNumber="
-				+ accountNumber + ", openingBank=" + openingBank
-				+ ", auditPrice=" + auditPrice + ", auditTotal=" + auditTotal
-				+ ", transCount=" + transCount + ", prooCount=" + prooCount
-				+ ", tranlevels=" + tranlevels + ", proolevels=" + proolevels
-				+ ", auditlevels=" + auditlevels + ", languages=" + languages
-				+ ", qid=" + qid + ", loginStatus=" + loginStatus
-				+ ", isProofread=" + isProofread + ", isAudit=" + isAudit
-				+ ", isVerifty=" + isVerifty + ", resumeUrl=" + resumeUrl
-				+ ", msg=" + msg + ", companyAddress=" + companyAddress
-				+ ", levels=" + levels + ", proofreadUrl=" + proofreadUrl
-				+ ", auditUrl=" + auditUrl + ", honor=" + honor + ", wallet="
-				+ wallet + ", problem=" + problem + ", answer=" + answer
-				+ ", rank=" + rank + ", clientCustomerNeeds="
-				+ clientCustomerNeeds + "]";
+		return "Translator [id=" + id + ", realName=" + realName + ", nickname=" + nickname + ", gender=" + gender
+				+ ", birthday=" + birthday + ", nameid=" + nameid + ", userUrl=" + userUrl + ", worksTarget="
+				+ worksTarget + ", worksOrigin=" + worksOrigin + ", worksUrl=" + worksUrl + ", workDescribe="
+				+ workDescribe + ", job=" + job + ", isObey=" + isObey + ", registerTime=" + registerTime + ", email="
+				+ email + ", tel=" + tel + ", address=" + address + ", ip=" + ip + ", tranPrice=" + tranPrice
+				+ ", prooPrice=" + prooPrice + ", dayTrans=" + dayTrans + ", transtionId=" + transtionId
+				+ ", transTotal=" + transTotal + ", prooTotal=" + prooTotal + ", isToolUse=" + isToolUse
+				+ ", description=" + description + ", onlineState=" + onlineState + ", accountName=" + accountName
+				+ ", password=" + password + ", softType=" + softType + ", point=" + point + ", domain=" + domain
+				+ ", language=" + language + ", tranExperience=" + tranExperience + ", prooExperience=" + prooExperience
+				+ ", cooperativeState=" + cooperativeState + ", level=" + level + ", major=" + major + ", degree="
+				+ degree + ", majorId=" + majorId + ", credentialsSalt=" + credentialsSalt + ", roleName=" + roleName
+				+ ", state=" + state + ", evaluateid=" + evaluateid + ", accountNumber=" + accountNumber
+				+ ", openingBank=" + openingBank + ", auditPrice=" + auditPrice + ", auditTotal=" + auditTotal
+				+ ", transCount=" + transCount + ", prooCount=" + prooCount + ", tranlevels=" + tranlevels
+				+ ", proolevels=" + proolevels + ", auditlevels=" + auditlevels + ", languages=" + languages + ", qid="
+				+ qid + ", loginStatus=" + loginStatus + ", isProofread=" + isProofread + ", isAudit=" + isAudit
+				+ ", isVerifty=" + isVerifty + ", resumeUrl=" + resumeUrl + ", msg=" + msg + ", msg2=" + msg2
+				+ ", companyAddress=" + companyAddress + ", levels=" + levels + ", proofreadUrl=" + proofreadUrl
+				+ ", auditUrl=" + auditUrl + ", honor=" + honor + ", wallet=" + wallet + ", problem=" + problem
+				+ ", answer=" + answer + ", rank=" + rank + ", applyState=" + applyState + ", quotations=" + quotations
+				+ ", clientCustomerNeeds=" + clientCustomerNeeds + ", dayProo=" + dayProo + ", dayAudit=" + dayAudit
+				+ ", majorTotal=" + majorTotal + ", initialPassword=" + initialPassword + ", transUrl=" + transUrl
+				+ ", majorTotals=" + majorTotals + ", prooTotals=" + prooTotals + ", applyStateT=" + applyStateT
+				+ ", applyStateP=" + applyStateP + ", applyStateA=" + applyStateA + ", certificationStatus="
+				+ certificationStatus + ", wantTranPrice=" + wantTranPrice + ", wantProoPrice=" + wantProoPrice
+				+ ", wantAuditPrice=" + wantAuditPrice + ", clientSoftName=" + clientSoftName + ", clientSoftCode="
+				+ clientSoftCode + "]";
 	}
 	public Translator() {
 		super();

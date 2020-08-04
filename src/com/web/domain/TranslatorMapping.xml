@@ -418,6 +418,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <if test="nickname!=null and nickname!=''">
 			 ,nickname=#{nickname}
 		</if>
+		<if test="clientSoftName!=null and clientSoftName!=''">
+			 ,clientSoftName=#{clientSoftName}
+		</if>
+		<if test="clientSoftCode!=null and clientSoftCode!=''">
+			 ,clientSoftCode=#{clientSoftCode}
+		</if>
        where id = #{id}
     </update>
     <!-- 执行修改 -->

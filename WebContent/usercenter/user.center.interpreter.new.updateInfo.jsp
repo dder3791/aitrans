@@ -219,6 +219,14 @@
     function hiddenSoftBox(){
     	$("#softbox").css("display","none")
     }
+    
+    function initSoftBox(){
+    	if($("#rai1").prop("checked")==true){
+    		showSoftBox();
+    	}else{
+    		hiddenSoftBox();
+    	}
+    }
 </script>
 	<style type="text/css">
 		.rowlabel-right {
@@ -249,7 +257,7 @@
 		}
 	</style>
    </head>
-  <body style="background:#f5f5f5;" onload="hiddenSoftBox()">
+  <body style="background:#f5f5f5;" onload="initSoftBox()">
   <!--      顶部导航      -->
   	<c:if test="${clientid.id!=null || transid.id!=null }">
   	<div class="publickNav">
@@ -378,7 +386,7 @@
 	               					</div>
 	               				</div>
 	               				<div class="row">
-	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件使用：'/></label>
+	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='（爱译智能PAT）软件使用：'/></label>
 	               					<label class="col-xs-4 rowlabel-left">
 	               						&nbsp;&nbsp;&nbsp;&nbsp;
 			                          	<input id="rai1"  type="radio" name="isToolUse" value="1" <c:if test="${translator.isToolUse ==1 }"> checked="checked"</c:if> onchange="showSoftBox()"><spring:message  code='使用'/>
@@ -387,11 +395,11 @@
 	               					</label>
 	               				</div>
 	               				<div class="row" id="softbox">
-	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件名称：'/></label>
+	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件用户名：'/></label>
 	               					<div class="col-xs-4">
 	               						<input class='form-control' name="clientSoftName" id="" onchange="" value="${translator.clientSoftName}">	               						
 	               					</div>
-	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件码：'/></label>
+	               					<label class="col-xs-2 rowlabel-right"><spring:message  code='软件用户码：'/></label>
 	               					<div class="col-xs-4">
 	               						<input class='form-control' name="clientSoftCode" value="${translator.clientSoftCode}">
 	               					</div>	               					

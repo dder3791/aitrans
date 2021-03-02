@@ -83,7 +83,8 @@ public class PayReturnAction {
 	
 	String payMoneyCode="";
 	
-	private static String baseUrl = "http://www.aitrans.org";
+	private static String baseUrl = "http://global.aitrans.org";//http://global.aitrans.org/payReturn/weixin.do/
+	//private static String baseUrl = "http://localhsot:8080";
 
 	@RequestMapping(value = "/toGetcodeUrl")   
 	public void WxPayUnifiedorder(Double total,HttpServletResponse response,String payType,String userId,String out_trade_no,HttpServletRequest request) throws Exception{  
